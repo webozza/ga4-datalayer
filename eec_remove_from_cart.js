@@ -54,13 +54,16 @@ jQuery(document).ready(function ($) {
       setTimeout(() => {
         let formStatus;
         $(".application-form-close").mouseover(function () {
-          formStatus = $(".application-form--content--inner--nav--item").eq(1);
+          formStatus = $(".application-form--content--inner--nav--item").eq(0);
           console.log(formStatus.hasClass("active"));
         });
 
         $(".application-form-close").click(function () {
-          if (!formStatus.hasClass("active")) {
+          if (formStatus.hasClass("active")) {
             removeFromCart();
+            console.log(formStatus.hasClass("active"));
+          } else {
+            console.log(formStatus.hasClass("active"));
           }
         });
       }, 2000);
