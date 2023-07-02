@@ -236,7 +236,9 @@ jQuery(document).ready(function ($) {
             cancellationPercentage = rawValue
               .replace("%", "")
               .replace(/\s/g, "");
-            addOnPrice = singleItemPrice * cancellationPercentage;
+            addOnPrice = Number(
+              singleItemPrice * (cancellationPercentage / 100)
+            ).toFixed(2);
           } else {
             addOnPrice = rawValue.replace("€", "").replace(/\s/g, "");
           }
