@@ -221,12 +221,20 @@ jQuery(document).ready(function ($) {
 
         // additional person removed
         let additionalPersonRemoved = () => {
+          // remove confirmation
+          let removeConfirmation = () => {
+            $('[data-bb-handler="confirm"]').click(function () {
+              console.log("confirmed removed person");
+            });
+          };
+
           // removes adult
           $('[ng-repeat="(key, adult) in adults"]')
             .eq(-1)
             .find('[ng-click="removeAdult(key)"]')
             .click(function () {
-              console.log("person removed");
+              console.log("adult removed");
+              removeConfirmation();
             });
 
           // removes child
@@ -234,7 +242,8 @@ jQuery(document).ready(function ($) {
             .eq(-1)
             .find('[ng-click="removeChild(key)"]')
             .click(function () {
-              console.log("person removed");
+              console.log("child removed");
+              removeConfirmation();
             });
         };
 
