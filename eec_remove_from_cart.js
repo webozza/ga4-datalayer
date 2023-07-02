@@ -51,24 +51,24 @@ jQuery(document).ready(function ($) {
       settings.url === ajaxurl &&
       settings.data.indexOf("action=get_departure_for_application_form") > -1
     ) {
-      setTimeout(() => {
-        let formStatus;
-        $(".application-form-close").mouseover(function () {
-          formStatus = $(".application-form--content--inner--nav--item")
-            .eq(0)
-            .hasClass("active");
-          console.log(formStatus);
-        });
+      //setTimeout(() => {
+      let formStatus;
+      $(".application-form-close").mouseover(function () {
+        formStatus = $(".application-form--content--inner--nav--item")
+          .eq(0)
+          .hasClass("active");
+        console.log(formStatus);
+      });
 
-        $(".application-form-close").one("click", function () {
-          if (formStatus == true) {
-            removeFromCart();
-            console.log(formStatus);
-          } else {
-            console.log(formStatus);
-          }
-        });
-      }, 2000);
+      $(".application-form-close").one("click", function () {
+        if (formStatus == true) {
+          removeFromCart();
+          console.log(formStatus);
+        } else {
+          console.log(formStatus);
+        }
+      });
+      //}, 2000);
     }
   });
 });
