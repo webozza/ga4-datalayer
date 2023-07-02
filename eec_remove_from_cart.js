@@ -52,10 +52,13 @@ jQuery(document).ready(function ($) {
       settings.data.indexOf("action=get_departure_for_application_form") > -1
     ) {
       setTimeout(() => {
+        let formStatus;
+        $(".application-form-close").mouseover(function () {
+          formStatus = $(".application-form--content--inner--nav--item").eq(1);
+          console.log(formStatus.hasClass("active"));
+        });
+
         $(".application-form-close").click(function () {
-          let formStatus = $(".application-form--content--inner--nav--item").eq(
-            1
-          );
           if (!formStatus.hasClass("active")) {
             removeFromCart();
           }
