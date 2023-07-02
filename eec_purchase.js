@@ -98,7 +98,7 @@ jQuery(document).ready(function ($) {
       if (entries.ID == purchaseDepartureID) {
         departureStartDate = entries.departure_start_date;
         cartSinglePrice = entries.actual_price;
-        travelId = entries.travelId;
+        travelId = entries.travel_id;
 
         await renderPotovanja(travelId);
 
