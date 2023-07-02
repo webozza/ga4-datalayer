@@ -90,7 +90,7 @@ jQuery(document).ready(function ($) {
       return await res.json();
     };
     let renderPotovanja = async (travel_id) => {
-      let response = await fetchPotovanja();
+      let response = await fetchPotovanja(travel_id);
       travelGuideId = response.acf.travel_guid;
     };
 
