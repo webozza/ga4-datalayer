@@ -52,14 +52,14 @@ jQuery(document).ready(function ($) {
       settings.data.indexOf("action=get_departure_for_application_form") > -1
     ) {
       setTimeout(() => {
-        let formStatus = $(".application-form--content--inner--nav--item").eq(
-          0
-        );
-        if (formStatus.hasClass("active")) {
-          $(".application-form-close").click(function () {
+        $(".application-form-close").click(function () {
+          let formStatus = $(".application-form--content--inner--nav--item").eq(
+            0
+          );
+          if (formStatus.hasClass("active")) {
             removeFromCart();
-          });
-        }
+          }
+        });
       }, 2000);
     }
   });
