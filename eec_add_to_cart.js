@@ -227,54 +227,28 @@ jQuery(document).ready(function ($) {
           }
         });
 
-        // surcharges - supplements and doctor
-        $('[name="extra_payments[]"]')
-          .eq(0)
-          .change(function () {
-            let addOnPrice = $(this)
-              .parent()
-              .find("span.bold.ng-binding.ng-scope font")
-              .text()
-              .replace("€", "");
-            if ($(this)[0].checked) {
-              addOn(addOnPrice);
-            } else {
-              removeAddOn(addOnPrice);
-            }
-          });
+        // surcharges
+        $('[name="extra_payments[]"]').change(async function () {
+          let rawValue = $(this).parent().find("span").text();
+          let addOnPrice;
 
-        $('[name="extra_payments[]"]')
-          .eq(2)
-          .change(function () {
-            let addOnPrice = $(this)
-              .parent()
-              .find("span.bold.ng-binding.ng-scope font")
-              .text()
-              .replace("€", "");
-            if ($(this)[0].checked) {
-              addOn(addOnPrice);
-            } else {
-              removeAddOn(addOnPrice);
-            }
-          });
+          if (rawValue.indexOf("%") > -1) {
+            cancellationPercentage = rawValue
+              .replace("%", "")
+              .replace(/\s/g, "");
+            addOnPrice = singleItemPrice * cancellationPercentage;
+          } else {
+            addOnPrice = rawValue.replace("€", "").replace(/\s/g, "");
+          }
 
-        // surcharges - cancellation fee
-        $('[name="extra_payments[]"]')
-          .eq(1)
-          .change(function () {
-            let cancellationPercentage =
-              $(this)
-                .parent()
-                .find("span.bold.ng-binding.ng-scope font")
-                .text()
-                .replace("%", "") / 100;
-            let cancellationFee = singleItemPrice * cancellationPercentage;
-            if ($(this)[0].checked) {
-              addOn(cancellationFee);
-            } else {
-              removeAddOn(cancellationFee);
-            }
-          });
+          if ($(this)[0].checked) {
+            //console.log("added", addOnPrice);
+            addOn(addOnPrice);
+          } else {
+            //console.log("removed", addOnPrice);
+            removeAddOn(addOnPrice);
+          }
+        });
       }, 2000);
     }
   });
