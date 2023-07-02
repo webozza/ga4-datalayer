@@ -221,39 +221,31 @@ jQuery(document).ready(function ($) {
 
         // additional person removed
         let additionalPersonRemoved = () => {
-          // remove confirmation
+          let confirmationTriggered = false;
+
           let removeConfirmation = () => {
-            $('[data-bb-handler="confirm"]').click(function () {
-              console.log("confirmed removed person");
-            });
+            if (!confirmationTriggered) {
+              $('[data-bb-handler="confirm"]').click(function () {
+                console.log("confirmed removed person");
+              });
+              confirmationTriggered = true;
+            }
           };
 
-          let removed;
-
-          // removes adult
           $('[ng-repeat="(key, adult) in adults"]')
             .eq(-1)
             .find('[ng-click="removeAdult(key)"]')
             .click(function () {
               console.log("adult removed");
-              removed = "true";
-              if (removed == "true") {
-                removeConfirmation();
-                removed = "false";
-              }
+              removeConfirmation();
             });
 
-          // removes child
           $('[ng-repeat="(key, child) in children"]')
             .eq(-1)
             .find('[ng-click="removeChild(key)"]')
             .click(function () {
               console.log("child removed");
-              removed = "true";
-              if (removed == "true") {
-                removeConfirmation();
-                removed = "false";
-              }
+              removeConfirmation();
             });
         };
 
