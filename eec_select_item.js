@@ -18,7 +18,7 @@ jQuery(document).ready(function ($) {
             item_brand: "Agencija Oskar",
             item_category: "Travel",
             item_category2: entries.country_name,
-            price: entries.price,
+            price: entries.actual_price,
             discount: entries.price - entries.actual_price,
             affiliation: undefined,
             travel_departure_date: entries.departure_start_date,

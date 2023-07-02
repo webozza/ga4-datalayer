@@ -6,7 +6,6 @@ jQuery(document).ready(function ($) {
     $(".application-form-cta").click(async function () {
       let departureID = $(this).data("departure-id");
       purchaseDepartureID = departureID;
-      console.log("purchase-departure-id", purchaseDepartureID);
       let travelID = $(this).data("travel-id");
       let addToCartItems = [];
 
