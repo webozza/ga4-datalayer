@@ -19,7 +19,6 @@ jQuery(document).ready(function ($) {
   let month = (today.getMonth() + 1).toString().padStart(2, "0");
   let year = today.getFullYear();
   let dateToday = `${year}${month}${day}`;
-  console.log(dateToday);
 
   // form open
   $(document).ajaxComplete(function (event, xhr, settings) {
@@ -75,12 +74,22 @@ jQuery(document).ready(function ($) {
 
   let triggerPurchaseEvent = () => {
     let itemData = [];
-    let totalPurchaseValue;
     let departureStartDate;
+
+    let cartQuantity = $(
+      '[ng-bind-html="infoPriceIncludedText"] > ul > li:first-child b'
+    )
+      .eq(0)
+      .text();
+    let cartTotal = $(
+      '[ng-bind-html="infoPriceIncludedText"] > ul > li:first-child b'
+    )
+      .eq(1)
+      .text()
+      .replace("€", "");
 
     oskarDepartures.map((entries) => {
       if (entries.ID == purchaseDepartureID) {
-        totalPurchaseValue = entries.actual_price;
         departureStartDate = entries.departure_start_date;
 
         itemData.push({
@@ -100,7 +109,7 @@ jQuery(document).ready(function ($) {
           travel_guide_id: undefined,
           product_type: "Main",
           travel_age_group: undefined,
-          quantity: undefined,
+          quantity: cartQuantity,
           coupon: undefined,
         });
 
@@ -123,7 +132,7 @@ jQuery(document).ready(function ($) {
       ecommerce: {
         currency: "EUR",
         transaction_id: undefined,
-        value: totalPurchaseValue,
+        value: cartTotal,
         tax: undefined,
         shipping: undefined,
         coupon: undefined,
