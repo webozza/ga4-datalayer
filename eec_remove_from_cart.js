@@ -54,9 +54,9 @@ jQuery(document).ready(function ($) {
       setTimeout(() => {
         $(".application-form-close").click(function () {
           let formStatus = $(".application-form--content--inner--nav--item").eq(
-            0
+            1
           );
-          if (formStatus.hasClass("active")) {
+          if (!formStatus.hasClass("active")) {
             removeFromCart();
           }
         });
