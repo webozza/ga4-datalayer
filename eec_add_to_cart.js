@@ -215,8 +215,18 @@ jQuery(document).ready(function ($) {
         $('[ng-click="addAdult()"], [ng-click="addChild()"]').click(
           function () {
             additionalPerson();
+            additionalPersonRemoved();
           }
         );
+
+        // additional person removed
+        let additionalPersonRemoved = () => {
+          $(
+            '[ng-click="removeAdult(key)"], [ng-click="removeChild(key)"]'
+          ).click(function () {
+            console.log("person removed");
+          });
+        };
 
         // extra bed
         $('[name="is_on_extra_bed"]').change(function () {
