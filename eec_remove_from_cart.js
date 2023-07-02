@@ -27,7 +27,7 @@ jQuery(document).ready(function ($) {
           travel_guide_id: undefined,
           product_type: "Main",
           travel_age_group: undefined,
-          quantity: undefined,
+          quantity: 1,
         });
       }
     });
@@ -53,6 +53,8 @@ jQuery(document).ready(function ($) {
     ) {
       setTimeout(() => {
         let formStatus;
+        let removeFromCartCalled = false;
+
         $(".application-form-close").mouseover(function () {
           formStatus = $(".application-form--content--inner--nav--item")
             .eq(0)
@@ -61,8 +63,9 @@ jQuery(document).ready(function ($) {
         });
 
         $(".application-form-close").click(function () {
-          if (formStatus == true) {
+          if (formStatus == true && !removeFromCartCalled) {
             removeFromCart();
+            removeFromCartCalled = true;
             console.log(formStatus);
           } else {
             console.log(formStatus);
