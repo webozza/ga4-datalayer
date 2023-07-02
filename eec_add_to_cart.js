@@ -121,6 +121,45 @@ jQuery(document).ready(function ($) {
     });
   };
 
+  let removeAdditionalPerson = () => {
+    let additionalPerson = [];
+    oskarDepartures.map((entries, index) => {
+      if (entries.ID == getDepartureId) {
+        additionalPerson.push({
+          item_id: entries.product_id,
+          item_name: entries.travel_name,
+          item_brand: "Agencija Oskar",
+          item_category: "Travel",
+          item_category2: entries.country_name,
+          price: entries.actual_price,
+          discount: entries.price - entries.actual_price,
+          affiliation: undefined,
+          travel_departure_date: entries.departure_start_date,
+          travel_style: entries.travel_style,
+          travel_type: undefined,
+          travel_group_size: entries.velikost_skupine,
+          travel_duration: entries.travel_duration,
+          travel_guide_id: undefined,
+          product_type: "Main",
+          travel_age_group: undefined,
+          quantity: 1,
+        });
+      }
+    });
+    window.dataLayer.push({ event_params: null, ecommerce: null });
+
+    window.dataLayer.push({
+      event: "RO_event_EEC",
+      event_params: {
+        gtm_name: "EEC_remove_from_cart",
+      },
+      ecommerce: {
+        currency: "EUR",
+        items: additionalPerson,
+      },
+    });
+  };
+
   let addOn = (addOnPrice) => {
     let addOnProduct = [];
     oskarDepartures.map((entries, index) => {
@@ -228,6 +267,7 @@ jQuery(document).ready(function ($) {
               $('[data-bb-handler="confirm"]')
                 .off("click")
                 .on("click", function () {
+                  removeAdditionalPerson();
                   console.log("confirmed removed person");
                 });
               confirmationTriggered = true;
@@ -239,7 +279,6 @@ jQuery(document).ready(function ($) {
             .find('[ng-click="removeAdult(key)"]')
             .off("click")
             .on("click", function () {
-              console.log("adult removed");
               removeConfirmation();
             });
 
@@ -248,7 +287,6 @@ jQuery(document).ready(function ($) {
             .find('[ng-click="removeChild(key)"]')
             .off("click")
             .on("click", function () {
-              console.log("child removed");
               removeConfirmation();
             });
         };
