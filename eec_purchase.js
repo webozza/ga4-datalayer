@@ -100,7 +100,7 @@ jQuery(document).ready(function ($) {
         cartSinglePrice = entries.actual_price;
         travelId = entries.travelId;
 
-        await renderPotovanja();
+        await renderPotovanja(travelId);
 
         itemData.push({
           item_id: entries.product_id,
