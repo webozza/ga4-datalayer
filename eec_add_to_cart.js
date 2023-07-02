@@ -228,13 +228,19 @@ jQuery(document).ready(function ($) {
             });
           };
 
+          let removed;
+
           // removes adult
           $('[ng-repeat="(key, adult) in adults"]')
             .eq(-1)
             .find('[ng-click="removeAdult(key)"]')
             .click(function () {
               console.log("adult removed");
-              removeConfirmation();
+              removed = "true";
+              if (removed == "true") {
+                removeConfirmation();
+                removed = "false";
+              }
             });
 
           // removes child
@@ -243,7 +249,11 @@ jQuery(document).ready(function ($) {
             .find('[ng-click="removeChild(key)"]')
             .click(function () {
               console.log("child removed");
-              removeConfirmation();
+              removed = "true";
+              if (removed == "true") {
+                removeConfirmation();
+                removed = "false";
+              }
             });
         };
 
