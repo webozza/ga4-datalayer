@@ -190,7 +190,7 @@ jQuery(document).ready(function ($) {
     window.dataLayer.push({
       event: "RO_event_EEC",
       event_params: {
-        gtm_name: "EEC_add_to_cart",
+        gtm_name: "EEC_remove_from_cart",
       },
       ecommerce: {
         currency: "EUR",
