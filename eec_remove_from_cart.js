@@ -53,8 +53,6 @@ jQuery(document).ready(function ($) {
     ) {
       setTimeout(() => {
         let formStatus;
-        let removeFromCartCalled = false;
-
         $(".application-form-close").mouseover(function () {
           formStatus = $(".application-form--content--inner--nav--item")
             .eq(0)
@@ -62,10 +60,9 @@ jQuery(document).ready(function ($) {
           console.log(formStatus);
         });
 
-        $(".application-form-close").click(function () {
-          if (formStatus == true && !removeFromCartCalled) {
+        $(".application-form-close").one("click", function () {
+          if (formStatus == true) {
             removeFromCart();
-            removeFromCartCalled = true;
             console.log(formStatus);
           } else {
             console.log(formStatus);
