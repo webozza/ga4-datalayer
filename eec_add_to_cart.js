@@ -221,11 +221,21 @@ jQuery(document).ready(function ($) {
 
         // additional person removed
         let additionalPersonRemoved = () => {
-          $(
-            '[ng-click="removeAdult(key)"], [ng-click="removeChild(key)"]'
-          ).click(function () {
-            console.log("person removed");
-          });
+          // removes adult
+          $('[ng-repeat="(key, adult) in adults"]')
+            .eq(-1)
+            .find('[ng-click="removeAdult(key)"]')
+            .click(function () {
+              console.log("person removed");
+            });
+
+          // removes child
+          $('[ng-repeat="(key, child) in children"]')
+            .eq(-1)
+            .find('[ng-click="removeChild(key)"]')
+            .click(function () {
+              console.log("person removed");
+            });
         };
 
         // extra bed
