@@ -225,9 +225,11 @@ jQuery(document).ready(function ($) {
 
           let removeConfirmation = () => {
             if (!confirmationTriggered) {
-              $('[data-bb-handler="confirm"]').click(function () {
-                console.log("confirmed removed person");
-              });
+              $('[data-bb-handler="confirm"]')
+                .off("click")
+                .on("click", function () {
+                  console.log("confirmed removed person");
+                });
               confirmationTriggered = true;
             }
           };
@@ -235,7 +237,8 @@ jQuery(document).ready(function ($) {
           $('[ng-repeat="(key, adult) in adults"]')
             .eq(-1)
             .find('[ng-click="removeAdult(key)"]')
-            .click(function () {
+            .off("click")
+            .on("click", function () {
               console.log("adult removed");
               removeConfirmation();
             });
@@ -243,7 +246,8 @@ jQuery(document).ready(function ($) {
           $('[ng-repeat="(key, child) in children"]')
             .eq(-1)
             .find('[ng-click="removeChild(key)"]')
-            .click(function () {
+            .off("click")
+            .on("click", function () {
               console.log("child removed");
               removeConfirmation();
             });
