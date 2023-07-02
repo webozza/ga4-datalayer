@@ -11,10 +11,11 @@ jQuery(document).ready(function ($) {
   let applicationType;
   let userType;
   let paymentMethod;
-  let methodOfPayment;
+  let methodOfPayment = "payment in full";
   let cartQuantity;
   let cartSinglePrice;
-  let cartTotalPrice;
+  let currentPriceListId;
+  let travelId;
 
   // get current date
   let today = new Date();
@@ -52,6 +53,8 @@ jQuery(document).ready(function ($) {
 
       console.log("new form data", newFormData);
       cartQuantity = newFormData["application_form[passengers_number]"];
+      currentPriceListId =
+        newFormData["application_form[price_list][current_price_list_id]"];
 
       let payOnline = newFormData["application_form[pay_online]"];
       let formApplicationType =
@@ -76,14 +79,28 @@ jQuery(document).ready(function ($) {
     }
   });
 
-  let triggerPurchaseEvent = () => {
+  let triggerPurchaseEvent = async () => {
     let itemData = [];
     let departureStartDate;
+    let travelGuideId;
 
-    oskarDepartures.map((entries) => {
+    let fetchPotovanja = async (travel_id) => {
+      const url = `/wp-json/wp/v2/potovanja/${travel_id}`;
+      let res = await fetch(url);
+      return await res.json();
+    };
+    let renderPotovanja = async (travel_id) => {
+      let response = await fetchPotovanja();
+      travelGuideId = response.acf.travel_guid;
+    };
+
+    oskarDepartures.map(async (entries) => {
       if (entries.ID == purchaseDepartureID) {
         departureStartDate = entries.departure_start_date;
         cartSinglePrice = entries.actual_price;
+        travelId = entries.travelId;
+
+        await renderPotovanja();
 
         itemData.push({
           item_id: entries.product_id,
@@ -99,7 +116,7 @@ jQuery(document).ready(function ($) {
           travel_type: undefined,
           travel_group_size: entries.velikost_skupine,
           travel_duration: entries.travel_duration,
-          travel_guide_id: undefined,
+          travel_guide_id: travelGuideId,
           product_type: "Main",
           travel_age_group: undefined,
           quantity: cartQuantity,
@@ -124,7 +141,7 @@ jQuery(document).ready(function ($) {
       },
       ecommerce: {
         currency: "EUR",
-        transaction_id: undefined,
+        transaction_id: currentPriceListId,
         value: cartSinglePrice * cartQuantity,
         tax: undefined,
         shipping: undefined,
