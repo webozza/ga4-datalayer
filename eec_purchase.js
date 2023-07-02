@@ -13,6 +13,14 @@ jQuery(document).ready(function ($) {
   let paymentMethod;
   let methodOfPayment;
 
+  // get current date
+  let today = new Date();
+  let day = today.getDate().toString().padStart(2, "0");
+  let month = (today.getMonth() + 1).toString().padStart(2, "0");
+  let year = today.getFullYear();
+  let dateToday = `${year}${month}${day}`;
+  console.log(dateToday);
+
   // form open
   $(document).ajaxComplete(function (event, xhr, settings) {
     if (
@@ -68,10 +76,12 @@ jQuery(document).ready(function ($) {
   let triggerPurchaseEvent = () => {
     let itemData = [];
     let totalPurchaseValue;
+    let departureStartDate;
 
     oskarDepartures.map((entries) => {
       if (entries.ID == purchaseDepartureID) {
         totalPurchaseValue = entries.actual_price;
+        departureStartDate = entries.departure_start_date;
 
         itemData.push({
           item_id: entries.product_id,
@@ -108,7 +118,7 @@ jQuery(document).ready(function ($) {
         user_type: userType,
         payment_method: paymentMethod,
         installments: methodOfPayment,
-        days_till_deparrture: undefined,
+        days_till_departure: Number(departureStartDate) - Number(dateToday),
       },
       ecommerce: {
         currency: "EUR",
