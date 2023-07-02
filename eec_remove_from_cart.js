@@ -54,16 +54,18 @@ jQuery(document).ready(function ($) {
       setTimeout(() => {
         let formStatus;
         $(".application-form-close").mouseover(function () {
-          formStatus = $(".application-form--content--inner--nav--item").eq(0);
-          console.log(formStatus.hasClass("active"));
+          formStatus = $(".application-form--content--inner--nav--item")
+            .eq(0)
+            .hasClass("active");
+          console.log(formStatus);
         });
 
         $(".application-form-close").click(function () {
-          if (formStatus.hasClass("active")) {
+          if (formStatus == true) {
             removeFromCart();
-            console.log(formStatus.hasClass("active"));
+            console.log(formStatus);
           } else {
-            console.log(formStatus.hasClass("active"));
+            console.log(formStatus);
           }
         });
       }, 2000);
