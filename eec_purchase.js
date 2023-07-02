@@ -12,6 +12,9 @@ jQuery(document).ready(function ($) {
   let userType;
   let paymentMethod;
   let methodOfPayment;
+  let cartQuantity;
+  let cartSinglePrice;
+  let cartTotalPrice;
 
   // get current date
   let today = new Date();
@@ -48,6 +51,7 @@ jQuery(document).ready(function ($) {
       let newFormData = Object.fromEntries(formData);
 
       console.log("new form data", newFormData);
+      cartQuantity = newFormData["application_form[passengers_number]"];
 
       let payOnline = newFormData["application_form[pay_online]"];
       let formApplicationType =
@@ -76,21 +80,10 @@ jQuery(document).ready(function ($) {
     let itemData = [];
     let departureStartDate;
 
-    let cartQuantity = $(
-      '[ng-bind-html="infoPriceIncludedText"] > ul > li:first-child b'
-    )
-      .eq(0)
-      .text();
-    let cartTotal = $(
-      '[ng-bind-html="infoPriceIncludedText"] > ul > li:first-child b'
-    )
-      .eq(1)
-      .text()
-      .replace("€", "");
-
     oskarDepartures.map((entries) => {
       if (entries.ID == purchaseDepartureID) {
         departureStartDate = entries.departure_start_date;
+        cartSinglePrice = entries.actual_price;
 
         itemData.push({
           item_id: entries.product_id,
@@ -132,7 +125,7 @@ jQuery(document).ready(function ($) {
       ecommerce: {
         currency: "EUR",
         transaction_id: undefined,
-        value: cartTotal,
+        value: cartSinglePrice * cartQuantity,
         tax: undefined,
         shipping: undefined,
         coupon: undefined,

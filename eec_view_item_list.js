@@ -13,7 +13,6 @@ jQuery(document).ready(function ($) {
   let productListView = () => {
     // PREPARE THE VARIABLES
     let productListing = [];
-    console.log(idsUnderCountry);
 
     if ($("body").hasClass("single-potovanja")) {
       oskarDepartures2.map((entries, index) => {
