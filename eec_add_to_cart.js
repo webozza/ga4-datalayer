@@ -211,69 +211,70 @@ jQuery(document).ready(function ($) {
       settings.data.indexOf("action=get_departure_for_application_form") > -1
     ) {
       setTimeout(() => {
+        // additional person added
         $('[ng-click="addAdult()"], [ng-click="addChild()"]').click(
           function () {
             additionalPerson();
-
-            // extra bed
-            $('[name="is_on_extra_bed"]').change(function () {
-              if ($(this)[0].checked) {
-                addOn(0);
-              } else {
-                removeAddOn(0);
-              }
-            });
-
-            // surcharges - supplements and doctor
-            $('[name="extra_payments[]"]')
-              .eq(0)
-              .change(function () {
-                let addOnPrice = $(this)
-                  .parent()
-                  .find("span.bold.ng-binding.ng-scope font")
-                  .text()
-                  .replace("€", "");
-                if ($(this)[0].checked) {
-                  addOn(addOnPrice);
-                } else {
-                  removeAddOn(addOnPrice);
-                }
-              });
-
-            $('[name="extra_payments[]"]')
-              .eq(2)
-              .change(function () {
-                let addOnPrice = $(this)
-                  .parent()
-                  .find("span.bold.ng-binding.ng-scope font")
-                  .text()
-                  .replace("€", "");
-                if ($(this)[0].checked) {
-                  addOn(addOnPrice);
-                } else {
-                  removeAddOn(addOnPrice);
-                }
-              });
-
-            // surcharges - cancellation fee
-            $('[name="extra_payments[]"]')
-              .eq(1)
-              .change(function () {
-                let cancellationPercentage =
-                  $(this)
-                    .parent()
-                    .find("span.bold.ng-binding.ng-scope font")
-                    .text()
-                    .replace("%", "") / 100;
-                let cancellationFee = singleItemPrice * cancellationPercentage;
-                if ($(this)[0].checked) {
-                  addOn(cancellationFee);
-                } else {
-                  removeAddOn(cancellationFee);
-                }
-              });
           }
         );
+
+        // extra bed
+        $('[name="is_on_extra_bed"]').change(function () {
+          if ($(this)[0].checked) {
+            addOn(0);
+          } else {
+            removeAddOn(0);
+          }
+        });
+
+        // surcharges - supplements and doctor
+        $('[name="extra_payments[]"]')
+          .eq(0)
+          .change(function () {
+            let addOnPrice = $(this)
+              .parent()
+              .find("span.bold.ng-binding.ng-scope font")
+              .text()
+              .replace("€", "");
+            if ($(this)[0].checked) {
+              addOn(addOnPrice);
+            } else {
+              removeAddOn(addOnPrice);
+            }
+          });
+
+        $('[name="extra_payments[]"]')
+          .eq(2)
+          .change(function () {
+            let addOnPrice = $(this)
+              .parent()
+              .find("span.bold.ng-binding.ng-scope font")
+              .text()
+              .replace("€", "");
+            if ($(this)[0].checked) {
+              addOn(addOnPrice);
+            } else {
+              removeAddOn(addOnPrice);
+            }
+          });
+
+        // surcharges - cancellation fee
+        $('[name="extra_payments[]"]')
+          .eq(1)
+          .change(function () {
+            let cancellationPercentage =
+              $(this)
+                .parent()
+                .find("span.bold.ng-binding.ng-scope font")
+                .text()
+                .replace("%", "") / 100;
+            let cancellationFee = singleItemPrice * cancellationPercentage;
+            if ($(this)[0].checked) {
+              addOn(cancellationFee);
+            } else {
+              removeAddOn(cancellationFee);
+            }
+          });
       }, 2000);
     }
   });
