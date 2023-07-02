@@ -80,9 +80,10 @@ jQuery(document).ready(function ($) {
   });
 
   let additionalPerson = () => {
+    let additionalPerson = [];
     oskarDepartures.map((entries, index) => {
       if (entries.ID == getDepartureId) {
-        addToCartItems.push({
+        additionalPerson.push({
           item_id: entries.product_id,
           item_name: entries.travel_name,
           item_brand: "Agencija Oskar",
@@ -102,6 +103,18 @@ jQuery(document).ready(function ($) {
           quantity: 1,
         });
       }
+    });
+    window.dataLayer.push({ event_params: null, ecommerce: null });
+
+    window.dataLayer.push({
+      event: "RO_event_EEC",
+      event_params: {
+        gtm_name: "EEC_add_to_cart",
+      },
+      ecommerce: {
+        currency: "EUR",
+        items: additionalPerson,
+      },
     });
   };
 
