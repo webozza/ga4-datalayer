@@ -61,9 +61,10 @@ jQuery(document).ready(function ($) {
       let getID = $(this).data("travel-id");
 
       if ($("body").hasClass("single-potovanja")) {
+        let hold2 = [];
         oskarDepartures2.map((entries, index) => {
           if (entries.travel_id == getID) {
-            productData.push({
+            hold2.push({
               item_id: entries.product_id,
               item_name: entries.travel_name,
               item_brand: "Agencija Oskar",
@@ -85,10 +86,12 @@ jQuery(document).ready(function ($) {
             });
           }
         });
+        productData = hold2[0];
       } else {
+        let hold = [];
         oskarDepartures.map((entries, index) => {
           if (entries.travel_id == getID) {
-            productData.push({
+            hold.push({
               item_id: entries.product_id,
               item_name: entries.travel_name,
               item_brand: "Agencija Oskar",
@@ -110,6 +113,7 @@ jQuery(document).ready(function ($) {
             });
           }
         });
+        productData = hold[0];
       }
 
       // PUSH TO GA4
