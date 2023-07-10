@@ -10,16 +10,26 @@ jQuery(document).ready(function ($) {
   let calculateAdditionalPayments = (newFormData) => {
     const additionalPaymentPrices = [];
 
+    // Check if the 'application_form[passengers]' property exists and is an array
     if (
       newFormData["application_form[passengers]"] &&
       Array.isArray(newFormData["application_form[passengers]"])
     ) {
-      for (const passenger of newFormData["application_form[passengers]"]) {
+      // Iterate over each passenger
+      for (const passengerKey in newFormData["application_form[passengers]"]) {
+        const passenger =
+          newFormData["application_form[passengers]"][passengerKey];
+
+        // Check if the 'all_extra_payments' property exists and is an array
         if (
           passenger.all_extra_payments &&
           Array.isArray(passenger.all_extra_payments)
         ) {
-          for (const payment of passenger.all_extra_payments) {
+          // Iterate over each payment for the passenger
+          for (const paymentKey in passenger.all_extra_payments) {
+            const payment = passenger.all_extra_payments[paymentKey];
+
+            // Check if both 'extra_payment_price' and 'extra_payment_percentage' exist
             if (
               payment.extra_payment_price &&
               payment.extra_payment_percentage
@@ -28,9 +38,9 @@ jQuery(document).ready(function ($) {
               const percentage = parseFloat(payment.extra_payment_percentage);
               const salePrice = parseFloat(passenger.sale_price);
 
-              const additionalPrice = (salePrice * percentage).toFixed(2);
+              const additionalPrice = salePrice * percentage;
 
-              additionalPaymentPrices.push(parseFloat(additionalPrice));
+              additionalPaymentPrices.push(additionalPrice);
             }
           }
         }
@@ -82,7 +92,7 @@ jQuery(document).ready(function ($) {
   });
 
   // trigger purchase event
-  $(document).ajaxComplete(function (event, xhr, settings) {
+  $(document).ajaxComplete(async function (event, xhr, settings) {
     if (
       settings.url === ajaxurl &&
       settings.data.indexOf("action=save_application_form") > -1
@@ -91,6 +101,7 @@ jQuery(document).ready(function ($) {
       var formData = new URLSearchParams(settings.data);
       let newFormData = Object.fromEntries(formData);
       additionalPrices = calculateAdditionalPayments(newFormData);
+      console.log(additionalPrices);
 
       console.log("new form data", newFormData);
       cartQuantity = newFormData["application_form[passengers_number]"];
