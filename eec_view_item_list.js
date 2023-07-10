@@ -129,7 +129,7 @@ jQuery(document).ready(function ($) {
       },
       ecommerce: {
         currency: "EUR",
-        items: productListing,
+        items: newProductListing,
       },
     });
   };
