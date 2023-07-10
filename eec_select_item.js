@@ -64,30 +64,32 @@ jQuery(document).ready(function ($) {
         let lowestIndex = Infinity;
         let lowestIndexEntry = null;
 
-        oskarDepartures2.map((entry, index) => {
-          if (entry.travel_id === getID && index < lowestIndex) {
-            lowestIndex = index;
-            lowestIndexEntry = {
-              departure_id: entry.ID,
-              item_id: entry.product_id,
-              item_name: entry.travel_name,
-              item_brand: "Agencija Oskar",
-              item_category: "Travel",
-              item_category2: entry.country_name,
-              price: entry.actual_price,
-              discount: entry.price - entry.actual_price,
-              affiliation: undefined,
-              travel_departure_date: entry.departure_start_date,
-              travel_style: entry.travel_style,
-              travel_type: undefined,
-              travel_group_size: entry.velikost_skupine,
-              travel_duration: entry.travel_duration,
-              travel_guide_id: undefined,
-              product_type: "Main",
-              travel_age_group: undefined,
-              item_list_name: "Status of departures",
-              index: index + 1,
-            };
+        oskarDepartures2.forEach((entry, index) => {
+          if (entry.travel_id == getID) {
+            if (index < lowestIndex) {
+              lowestIndex = index;
+              lowestIndexEntry = {
+                departure_id: entry.ID,
+                item_id: entry.product_id,
+                item_name: entry.travel_name,
+                item_brand: "Agencija Oskar",
+                item_category: "Travel",
+                item_category2: entry.country_name,
+                price: entry.actual_price,
+                discount: entry.price - entry.actual_price,
+                affiliation: undefined,
+                travel_departure_date: entry.departure_start_date,
+                travel_style: entry.travel_style,
+                travel_type: undefined,
+                travel_group_size: entry.velikost_skupine,
+                travel_duration: entry.travel_duration,
+                travel_guide_id: undefined,
+                product_type: "Main",
+                travel_age_group: undefined,
+                item_list_name: "Status of departures",
+                index: index + 1,
+              };
+            }
           }
         });
 
@@ -98,30 +100,32 @@ jQuery(document).ready(function ($) {
         let lowestIndex = Infinity;
         let lowestIndexEntry = null;
 
-        oskarDepartures.map((entry, index) => {
-          if (entry.travel_id === getID && index < lowestIndex) {
-            lowestIndex = index;
-            lowestIndexEntry = {
-              departure_id: entry.ID,
-              item_id: entry.product_id,
-              item_name: entry.travel_name,
-              item_brand: "Agencija Oskar",
-              item_category: "Travel",
-              item_category2: entry.country_name,
-              price: entry.actual_price,
-              discount: entry.price - entry.actual_price,
-              affiliation: undefined,
-              travel_departure_date: entry.departure_start_date,
-              travel_style: entry.travel_style,
-              travel_type: undefined,
-              travel_group_size: entry.velikost_skupine,
-              travel_duration: entry.travel_duration,
-              travel_guide_id: undefined,
-              product_type: "Main",
-              travel_age_group: undefined,
-              item_list_name: "Status of departures",
-              index: index + 1,
-            };
+        oskarDepartures.forEach((entry, index) => {
+          if (entry.travel_id == getID) {
+            if (index < lowestIndex) {
+              lowestIndex = index;
+              lowestIndexEntry = {
+                departure_id: entry.ID,
+                item_id: entry.product_id,
+                item_name: entry.travel_name,
+                item_brand: "Agencija Oskar",
+                item_category: "Travel",
+                item_category2: entry.country_name,
+                price: entry.actual_price,
+                discount: entry.price - entry.actual_price,
+                affiliation: undefined,
+                travel_departure_date: entry.departure_start_date,
+                travel_style: entry.travel_style,
+                travel_type: undefined,
+                travel_group_size: entry.velikost_skupine,
+                travel_duration: entry.travel_duration,
+                travel_guide_id: undefined,
+                product_type: "Main",
+                travel_age_group: undefined,
+                item_list_name: "Status of departures",
+                index: index + 1,
+              };
+            }
           }
         });
 
