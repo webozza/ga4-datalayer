@@ -1,11 +1,37 @@
 jQuery(document).ready(function ($) {
   var pageHasList = $(".table--departures").length;
-
+  // 6105.21
   // prepare departure id
   let purchaseDepartureID = "";
   $(".application-form-cta").click(function () {
     purchaseDepartureID = $(this).data("departure-id");
   });
+
+  let calculateAdditionalPayments = (newFormData) => {
+    const additionalPaymentPrices = [];
+
+    for (const passenger of newFormData.passengers) {
+      for (const payment of passenger.all_extra_payments) {
+        if (payment.extra_payment_price && payment.extra_payment_percentage) {
+          const price = parseFloat(payment.extra_payment_price);
+          const percentage = parseFloat(payment.extra_payment_percentage);
+          const salePrice = parseFloat(passenger.sale_price);
+
+          const additionalPrice = (salePrice * percentage).toFixed(2);
+
+          additionalPaymentPrices.push(parseFloat(additionalPrice));
+        }
+      }
+    }
+
+    // Calculate the sum of all additional payment prices
+    const sumOfAdditionalPayments = additionalPaymentPrices.reduce(
+      (a, b) => a + b,
+      0
+    );
+
+    additionalPrices = sumOfAdditionalPayments;
+  };
 
   // prepare other data
   let applicationType;
@@ -16,6 +42,7 @@ jQuery(document).ready(function ($) {
   let cartSinglePrice;
   let currentPriceListId;
   let travelId;
+  let additionalPrices;
 
   // get current date
   let today = new Date();
@@ -50,6 +77,7 @@ jQuery(document).ready(function ($) {
       console.log("settings ->", settings);
       var formData = new URLSearchParams(settings.data);
       let newFormData = Object.fromEntries(formData);
+      calculateAdditionalPayments(newFormData);
 
       console.log("new form data", newFormData);
       cartQuantity = newFormData["application_form[passengers_number]"];
@@ -142,7 +170,7 @@ jQuery(document).ready(function ($) {
       ecommerce: {
         currency: "EUR",
         transaction_id: currentPriceListId,
-        value: cartSinglePrice * cartQuantity,
+        value: cartSinglePrice * cartQuantity + Number(additionalPrices) + 21,
         tax: undefined,
         shipping: undefined,
         coupon: undefined,
