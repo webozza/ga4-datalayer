@@ -59,6 +59,7 @@ jQuery(document).ready(function ($) {
       e.preventDefault();
       // PREPARE THE VARIABLES
       let getID = $(this).data("travel-id");
+      let bannerIndex = $(this).parent().index();
 
       if ($("body").hasClass("single-potovanja")) {
         let hold2 = [];
@@ -82,7 +83,7 @@ jQuery(document).ready(function ($) {
               product_type: "Main",
               travel_age_group: undefined,
               item_list_name: "Status of departures",
-              index: index + 1,
+              index: bannerIndex,
             });
           }
         });
@@ -109,7 +110,7 @@ jQuery(document).ready(function ($) {
               product_type: "Main",
               travel_age_group: undefined,
               item_list_name: "Status of departures",
-              index: index + 1,
+              index: bannerIndex,
             });
           }
         });
