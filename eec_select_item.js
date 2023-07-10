@@ -59,8 +59,10 @@ jQuery(document).ready(function ($) {
       e.preventDefault();
       // PREPARE THE VARIABLES
       let getID = $(this).data("travel-id");
+
       oskarDepartures.map((entries, index) => {
         if (entries.travel_id == getID) {
+          console.log(entries.travel_id);
           productData.push({
             item_id: entries.product_id,
             item_name: entries.travel_name,
