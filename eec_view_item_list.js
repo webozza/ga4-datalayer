@@ -57,16 +57,23 @@ jQuery(document).ready(function ($) {
     return str;
   };
 
+  let curLoc = window.location.href;
+  let filters;
+  let formattedFilters;
+
+  if (curLoc.indexOf("?dezela") > -1) {
+    filters = convertStringToObject(window.location.search);
+    formattedFilters = convertObjectToString(filters);
+    console.log(formattedFilters);
+  }
+
   let productListView = () => {
     // PREPARE THE VARIABLES
     let productListing = [];
     let newProductListing = [];
-    let curLoc = window.location.href;
 
     if (curLoc.indexOf("?dezela") > -1) {
       let filteredDepartureIds = [];
-      let filters = convertStringToObject(window.location.search);
-      let formattedFilters = convertObjectToString(filters);
 
       $(".cr_row_active_all").each(function () {
         let departured_id = $(this).data("id");
