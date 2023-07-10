@@ -10,8 +10,11 @@ jQuery(document).ready(function ($) {
   let calculateAdditionalPayments = (newFormData) => {
     const additionalPaymentPrices = [];
 
-    if (newFormData.passengers && Array.isArray(newFormData.passengers)) {
-      for (const passenger of newFormData.passengers) {
+    if (
+      newFormData["application_form[passengers]"] &&
+      Array.isArray(newFormData["application_form[passengers]"])
+    ) {
+      for (const passenger of newFormData["application_form[passengers]"]) {
         if (
           passenger.all_extra_payments &&
           Array.isArray(passenger.all_extra_payments)
