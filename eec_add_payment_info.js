@@ -6,6 +6,14 @@ jQuery(document).ready(function ($) {
     departureID = $(this).data("departure-id");
   });
 
+  let rerunFunc = () => {
+    $('[ng-model="applicationFormObject.application_form_type"]').change(
+      function () {
+        add_payment_info();
+      }
+    );
+  };
+
   let add_payment_info = () => {
     $('input[name="pay_online"], input[name="send_proforma_invoice"]').change(
       function () {
@@ -110,6 +118,7 @@ jQuery(document).ready(function ($) {
       ) {
         setTimeout(() => {
           add_payment_info();
+          rerunFunc();
         }, 2000);
       }
     });
