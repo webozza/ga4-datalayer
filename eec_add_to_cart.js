@@ -255,8 +255,8 @@ jQuery(document).ready(function ($) {
           function () {
             additionalPerson();
             additionalPersonRemoved();
-            handleSurcharges();
-            handleExtraBed();
+            // handleSurcharges();
+            // handleExtraBed();
           }
         );
 
