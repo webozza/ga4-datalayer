@@ -86,7 +86,7 @@ jQuery(document).ready(function ($) {
             });
           }
         });
-        productData = hold2[0];
+        productData = [hold2[0]];
       } else {
         let hold = [];
         oskarDepartures.map((entries, index) => {
@@ -113,7 +113,7 @@ jQuery(document).ready(function ($) {
             });
           }
         });
-        productData = hold[0];
+        productData = [hold[0]];
       }
 
       // PUSH TO GA4
