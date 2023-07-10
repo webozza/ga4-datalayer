@@ -87,7 +87,7 @@ jQuery(document).ready(function ($) {
           }
         });
       } else {
-        oskarDepartures2.map((entries, index) => {
+        oskarDepartures.map((entries, index) => {
           if (entries.travel_id == getID) {
             console.log(entries.travel_id);
             productData.push({
