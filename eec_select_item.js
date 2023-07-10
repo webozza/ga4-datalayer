@@ -65,6 +65,7 @@ jQuery(document).ready(function ($) {
           if (entries.travel_id == getID) {
             console.log(entries.travel_id);
             productData.push({
+              departure_id: entries.ID,
               item_id: entries.product_id,
               item_name: entries.travel_name,
               item_brand: "Agencija Oskar",
@@ -91,6 +92,7 @@ jQuery(document).ready(function ($) {
           if (entries.travel_id == getID) {
             console.log(entries.travel_id);
             productData.push({
+              departure_id: entries.ID,
               item_id: entries.product_id,
               item_name: entries.travel_name,
               item_brand: "Agencija Oskar",
