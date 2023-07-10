@@ -22,21 +22,23 @@ jQuery(document).ready(function ($) {
 
         // Check if the 'all_extra_payments' property exists and is an array
         if (
-          passenger.all_extra_payments &&
-          Array.isArray(passenger.all_extra_payments)
+          passenger["all_extra_payments[]"] &&
+          Array.isArray(passenger["all_extra_payments[]"])
         ) {
           // Iterate over each payment for the passenger
-          for (const paymentKey in passenger.all_extra_payments) {
-            const payment = passenger.all_extra_payments[paymentKey];
+          for (const paymentKey in passenger["all_extra_payments[]"]) {
+            const payment = passenger["all_extra_payments[]"][paymentKey];
 
             // Check if both 'extra_payment_price' and 'extra_payment_percentage' exist
             if (
-              payment.extra_payment_price &&
-              payment.extra_payment_percentage
+              payment["extra_payment_price[]"] &&
+              payment["extra_payment_percentage[]"]
             ) {
-              const price = parseFloat(payment.extra_payment_price);
-              const percentage = parseFloat(payment.extra_payment_percentage);
-              const salePrice = parseFloat(passenger.sale_price);
+              const price = parseFloat(payment["extra_payment_price[]"]);
+              const percentage = parseFloat(
+                payment["extra_payment_percentage[]"]
+              );
+              const salePrice = parseFloat(passenger["sale_price"]);
 
               const additionalPrice = salePrice * percentage;
 
@@ -101,7 +103,7 @@ jQuery(document).ready(function ($) {
       var formData = new URLSearchParams(settings.data);
       let newFormData = Object.fromEntries(formData);
       additionalPrices = calculateAdditionalPayments(newFormData);
-      console.log(additionalPrices);
+      console.log("additional prices -> ", additionalPrices);
 
       console.log("new form data", newFormData);
       cartQuantity = newFormData["application_form[passengers_number]"];
