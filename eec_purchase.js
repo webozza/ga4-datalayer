@@ -7,6 +7,17 @@ jQuery(document).ready(function ($) {
     purchaseDepartureID = $(this).data("departure-id");
   });
 
+  // prepare other data
+  let applicationType;
+  let userType;
+  let paymentMethod;
+  let methodOfPayment = "payment in full";
+  let cartQuantity;
+  let cartSinglePrice;
+  let currentPriceListId;
+  let travelId;
+  let additionalPrices = 0;
+
   let calculateAdditionalPayments = (newFormData) => {
     const additionalPaymentPrices = [];
 
@@ -55,19 +66,9 @@ jQuery(document).ready(function ($) {
       0
     );
 
-    return sumOfAdditionalPayments;
+    additionalPrices = sumOfAdditionalPayments;
+    console.log("additional prices -> ", additionalPrices);
   };
-
-  // prepare other data
-  let applicationType;
-  let userType;
-  let paymentMethod;
-  let methodOfPayment = "payment in full";
-  let cartQuantity;
-  let cartSinglePrice;
-  let currentPriceListId;
-  let travelId;
-  let additionalPrices;
 
   // get current date
   let today = new Date();
@@ -102,8 +103,7 @@ jQuery(document).ready(function ($) {
       console.log("settings ->", settings);
       var formData = new URLSearchParams(settings.data);
       let newFormData = Object.fromEntries(formData);
-      additionalPrices = calculateAdditionalPayments(newFormData);
-      console.log("additional prices -> ", additionalPrices);
+      calculateAdditionalPayments(newFormData);
 
       console.log("new form data", newFormData);
       cartQuantity = newFormData["application_form[passengers_number]"];
