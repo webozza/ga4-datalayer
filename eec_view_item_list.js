@@ -10,6 +10,53 @@ jQuery(document).ready(function ($) {
     });
   }
 
+  let convertStringToObject = (string) => {
+    // Remove the leading '?' character if present
+    if (string.startsWith("?")) {
+      string = string.substring(1);
+    }
+
+    // Split the string into key-value pairs
+    const pairs = string.split("&");
+
+    // Create an empty object to store the key-value pairs
+    const obj = {};
+
+    // Iterate over the pairs and populate the object
+    pairs.forEach((pair) => {
+      const [key, value] = pair.split("=");
+      const decodedKey = decodeURIComponent(key);
+      const decodedValue = decodeURIComponent(value);
+
+      if (obj.hasOwnProperty(decodedKey)) {
+        obj[decodedKey].push(decodedValue);
+      } else {
+        obj[decodedKey] = [decodedValue];
+      }
+    });
+
+    return obj;
+  };
+
+  let convertObjectToString = (obj) => {
+    let str = "";
+
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        const values = obj[key];
+        const decodedKey = decodeURIComponent(key.replace("[]", ""));
+        const decodedValue = decodeURIComponent(values[0]);
+
+        str += `${decodedKey}: ${decodedValue} | `;
+      }
+    }
+
+    // Remove the trailing " | " from the string
+    str = str.slice(0, -3);
+
+    return str;
+  };
+
   let productListView = () => {
     // PREPARE THE VARIABLES
     let productListing = [];
@@ -18,6 +65,9 @@ jQuery(document).ready(function ($) {
 
     if (curLoc.indexOf("?dezela") > -1) {
       let filteredDepartureIds = [];
+      let filters = convertStringToObject(window.location.search);
+      let formattedFilters = convertObjectToString(filters);
+
       $(".cr_row_active_all").each(function () {
         let departured_id = $(this).data("id");
         filteredDepartureIds.push(departured_id);
@@ -46,7 +96,7 @@ jQuery(document).ready(function ($) {
                   travel_guide_id: undefined,
                   product_type: "Main",
                   travel_age_group: undefined,
-                  item_list_name: `${entries.travel_name}: Departures Table'`,
+                  item_list_name: `${entries.travel_name}: Departures Table | ${formattedFilters}`,
                   //index: index + 1,
                 });
               }
@@ -70,7 +120,7 @@ jQuery(document).ready(function ($) {
                 travel_guide_id: undefined,
                 product_type: "Main",
                 travel_age_group: undefined,
-                item_list_name: `${entries.travel_name}: Departures Table'`,
+                item_list_name: `${entries.travel_name}: Departures Table | ${formattedFilters}`,
                 //index: index + 1,
               });
             }
@@ -99,7 +149,7 @@ jQuery(document).ready(function ($) {
                   travel_guide_id: undefined,
                   product_type: "Main",
                   travel_age_group: undefined,
-                  item_list_name: `${entries.travel_name}: Departures Table'`,
+                  item_list_name: `${entries.travel_name}: Departures Table | ${formattedFilters}`,
                   //index: index + 1,
                 });
               }
@@ -123,7 +173,7 @@ jQuery(document).ready(function ($) {
                 travel_guide_id: undefined,
                 product_type: "Main",
                 travel_age_group: undefined,
-                item_list_name: `${entries.travel_name}: Departures Table'`,
+                item_list_name: `${entries.travel_name}: Departures Table | ${formattedFilters}`,
                 //index: index + 1,
               });
             }
