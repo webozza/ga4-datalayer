@@ -1,6 +1,6 @@
 jQuery(document).ready(function ($) {
   var pageHasList = $(".table--departures").length;
-  // 6105.21
+
   // prepare departure id
   let purchaseDepartureID = "";
   $(".application-form-cta").click(function () {
@@ -16,59 +16,7 @@ jQuery(document).ready(function ($) {
   let cartSinglePrice;
   let currentPriceListId;
   let travelId;
-  let additionalPrices = 0;
-
-  let calculateAdditionalPayments = (newFormData) => {
-    const additionalPaymentPrices = [];
-
-    // Check if the 'application_form[passengers]' property exists and is an array
-    if (
-      newFormData["application_form[passengers]"] &&
-      Array.isArray(newFormData["application_form[passengers]"])
-    ) {
-      // Iterate over each passenger
-      for (const passengerKey in newFormData["application_form[passengers]"]) {
-        const passenger =
-          newFormData["application_form[passengers]"][passengerKey];
-
-        // Check if the 'all_extra_payments' property exists and is an array
-        if (
-          passenger["all_extra_payments[]"] &&
-          Array.isArray(passenger["all_extra_payments[]"])
-        ) {
-          // Iterate over each payment for the passenger
-          for (const paymentKey in passenger["all_extra_payments[]"]) {
-            const payment = passenger["all_extra_payments[]"][paymentKey];
-
-            // Check if both 'extra_payment_price' and 'extra_payment_percentage' exist
-            if (
-              payment["extra_payment_price"] &&
-              payment["extra_payment_percentage"]
-            ) {
-              const price = parseFloat(payment["extra_payment_price"]);
-              const percentage = parseFloat(
-                payment["extra_payment_percentage"]
-              );
-              const salePrice = parseFloat(passenger["sale_price"]);
-
-              const additionalPrice = salePrice * percentage;
-
-              additionalPaymentPrices.push(additionalPrice);
-            }
-          }
-        }
-      }
-    }
-
-    // Calculate the sum of all additional payment prices
-    const sumOfAdditionalPayments = additionalPaymentPrices.reduce(
-      (a, b) => a + b,
-      0
-    );
-
-    additionalPrices = sumOfAdditionalPayments;
-    console.log("additional prices -> ", additionalPrices);
-  };
+  let totalPurchaseValue;
 
   // get current date
   let today = new Date();
@@ -95,7 +43,7 @@ jQuery(document).ready(function ($) {
   });
 
   // trigger purchase event
-  $(document).ajaxComplete(async function (event, xhr, settings) {
+  $(document).ajaxComplete(function (event, xhr, settings) {
     if (
       settings.url === ajaxurl &&
       settings.data.indexOf("action=save_application_form") > -1
@@ -103,7 +51,6 @@ jQuery(document).ready(function ($) {
       console.log("settings ->", settings);
       var formData = new URLSearchParams(settings.data);
       let newFormData = Object.fromEntries(formData);
-      calculateAdditionalPayments(newFormData);
 
       console.log("new form data", newFormData);
       cartQuantity = newFormData["application_form[passengers_number]"];
@@ -137,6 +84,10 @@ jQuery(document).ready(function ($) {
     let itemData = [];
     let departureStartDate;
     let travelGuideId;
+    totalPurchaseValue = $(".application-form .price")
+      .eq(0)
+      .text()
+      .replace("€", "");
 
     let fetchPotovanja = async (travel_id) => {
       const url = `/wp-json/wp/v2/potovanja/${travel_id}`;
@@ -196,7 +147,7 @@ jQuery(document).ready(function ($) {
       ecommerce: {
         currency: "EUR",
         transaction_id: currentPriceListId,
-        value: cartSinglePrice * cartQuantity + Number(additionalPrices) + 21,
+        value: totalPurchaseValue,
         tax: undefined,
         shipping: undefined,
         coupon: undefined,
