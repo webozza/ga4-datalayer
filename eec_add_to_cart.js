@@ -255,6 +255,8 @@ jQuery(document).ready(function ($) {
           function () {
             additionalPerson();
             additionalPersonRemoved();
+            handleSurcharges();
+            handleExtraBed();
           }
         );
 
@@ -292,38 +294,52 @@ jQuery(document).ready(function ($) {
         };
 
         // extra bed
-        $('[name="is_on_extra_bed"]').change(function () {
-          if ($(this)[0].checked) {
-            addOn(0);
-          } else {
-            removeAddOn(0);
-          }
-        });
+        let handleExtraBed = () => {
+          $(document).on(
+            "change",
+            '[name="is_on_extra_bed"], [ng-change="passengerIsOnExtraBedHasChanged()"]',
+            function () {
+              if ($(this)[0].checked) {
+                addOn(0);
+              } else {
+                removeAddOn(0);
+              }
+            }
+          );
+        };
+        handleExtraBed();
 
         // surcharges
-        $('[name="extra_payments[]"]').change(async function () {
-          let rawValue = $(this).parent().find("span").text();
-          let addOnPrice;
+        let handleSurcharges = () => {
+          $(document).on(
+            "change",
+            '[name="extra_payments[]"], [ng-repeat="extra_payment in departure.extraPayments"] :checkbox',
+            async function () {
+              let rawValue = $(this).parent().find("span").text();
+              let addOnPrice;
 
-          if (rawValue.indexOf("%") > -1) {
-            cancellationPercentage = rawValue
-              .replace("%", "")
-              .replace(/\s/g, "");
-            addOnPrice = Number(
-              singleItemPrice * (cancellationPercentage / 100)
-            ).toFixed(2);
-          } else {
-            addOnPrice = rawValue.replace("€", "").replace(/\s/g, "");
-          }
+              if (rawValue.indexOf("%") > -1) {
+                cancellationPercentage = rawValue
+                  .replace("%", "")
+                  .replace(/\s/g, "");
+                addOnPrice = Number(
+                  singleItemPrice * (cancellationPercentage / 100)
+                ).toFixed(2);
+              } else {
+                addOnPrice = rawValue.replace("€", "").replace(/\s/g, "");
+              }
 
-          if ($(this)[0].checked) {
-            //console.log("added", addOnPrice);
-            addOn(addOnPrice);
-          } else {
-            //console.log("removed", addOnPrice);
-            removeAddOn(addOnPrice);
-          }
-        });
+              if ($(this)[0].checked) {
+                //console.log("added", addOnPrice);
+                addOn(addOnPrice);
+              } else {
+                //console.log("removed", addOnPrice);
+                removeAddOn(addOnPrice);
+              }
+            }
+          );
+        };
+        handleSurcharges();
       }, 2000);
     }
   });
