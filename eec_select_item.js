@@ -61,65 +61,65 @@ jQuery(document).ready(function ($) {
       let getID = $(this).data("travel-id");
 
       if ($("body").hasClass("single-potovanja")) {
-        oskarDepartures2.reduce((minIndexEntry, currentEntry, currentIndex) => {
-          if (
-            currentEntry.travel_id === getID &&
-            (minIndexEntry === null || currentIndex < minIndexEntry.index)
-          ) {
-            return {
-              departure_id: currentEntry.ID,
-              item_id: currentEntry.product_id,
-              item_name: currentEntry.travel_name,
-              item_brand: "Agencija Oskar",
-              item_category: "Travel",
-              item_category2: currentEntry.country_name,
-              price: currentEntry.actual_price,
-              discount: currentEntry.price - currentEntry.actual_price,
-              affiliation: undefined,
-              travel_departure_date: currentEntry.departure_start_date,
-              travel_style: currentEntry.travel_style,
-              travel_type: undefined,
-              travel_group_size: currentEntry.velikost_skupine,
-              travel_duration: currentEntry.travel_duration,
-              travel_guide_id: undefined,
-              product_type: "Main",
-              travel_age_group: undefined,
-              item_list_name: "Status of departures",
-              index: currentIndex + 1,
-            };
+        let lowestIndexEntry = null;
+        for (let i = 0; i < oskarDepartures2.length; i++) {
+          const entry = oskarDepartures2[i];
+          if (entry.travel_id === getID) {
+            if (lowestIndexEntry === null || i < lowestIndexEntry.index) {
+              lowestIndexEntry = {
+                departure_id: entry.ID,
+                item_id: entry.product_id,
+                item_name: entry.travel_name,
+                item_brand: "Agencija Oskar",
+                item_category: "Travel",
+                item_category2: entry.country_name,
+                price: entry.actual_price,
+                discount: entry.price - entry.actual_price,
+                affiliation: undefined,
+                travel_departure_date: entry.departure_start_date,
+                travel_style: entry.travel_style,
+                travel_type: undefined,
+                travel_group_size: entry.velikost_skupine,
+                travel_duration: entry.travel_duration,
+                travel_guide_id: undefined,
+                product_type: "Main",
+                travel_age_group: undefined,
+                item_list_name: "Status of departures",
+                index: i + 1,
+              };
+            }
           }
-          return minIndexEntry;
-        }, null);
+        }
       } else {
-        oskarDepartures.reduce((minIndexEntry, currentEntry, currentIndex) => {
-          if (
-            currentEntry.travel_id === getID &&
-            (minIndexEntry === null || currentIndex < minIndexEntry.index)
-          ) {
-            return {
-              departure_id: currentEntry.ID,
-              item_id: currentEntry.product_id,
-              item_name: currentEntry.travel_name,
-              item_brand: "Agencija Oskar",
-              item_category: "Travel",
-              item_category2: currentEntry.country_name,
-              price: currentEntry.actual_price,
-              discount: currentEntry.price - currentEntry.actual_price,
-              affiliation: undefined,
-              travel_departure_date: currentEntry.departure_start_date,
-              travel_style: currentEntry.travel_style,
-              travel_type: undefined,
-              travel_group_size: currentEntry.velikost_skupine,
-              travel_duration: currentEntry.travel_duration,
-              travel_guide_id: undefined,
-              product_type: "Main",
-              travel_age_group: undefined,
-              item_list_name: "Status of departures",
-              index: currentIndex + 1,
-            };
+        let lowestIndexEntry = null;
+        for (let i = 0; i < oskarDepartures.length; i++) {
+          const entry = oskarDepartures[i];
+          if (entry.travel_id === getID) {
+            if (lowestIndexEntry === null || i < lowestIndexEntry.index) {
+              lowestIndexEntry = {
+                departure_id: entry.ID,
+                item_id: entry.product_id,
+                item_name: entry.travel_name,
+                item_brand: "Agencija Oskar",
+                item_category: "Travel",
+                item_category2: entry.country_name,
+                price: entry.actual_price,
+                discount: entry.price - entry.actual_price,
+                affiliation: undefined,
+                travel_departure_date: entry.departure_start_date,
+                travel_style: entry.travel_style,
+                travel_type: undefined,
+                travel_group_size: entry.velikost_skupine,
+                travel_duration: entry.travel_duration,
+                travel_guide_id: undefined,
+                product_type: "Main",
+                travel_age_group: undefined,
+                item_list_name: "Status of departures",
+                index: i + 1,
+              };
+            }
           }
-          return minIndexEntry;
-        }, null);
+        }
       }
 
       // PUSH TO GA4
