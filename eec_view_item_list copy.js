@@ -39,11 +39,10 @@ jQuery(document).ready(function ($) {
               product_type: "Main",
               travel_age_group: undefined,
               item_list_name: `${entries.travel_name}: Departures Table'`,
-              //index: index + 1,
             });
           }
         } else {
-          newProductListing.push({
+          productListing.push({
             item_id: entries.product_id,
             item_name: entries.travel_name,
             item_brand: "Agencija Oskar",
@@ -61,7 +60,7 @@ jQuery(document).ready(function ($) {
             product_type: "Main",
             travel_age_group: undefined,
             item_list_name: `${entries.travel_name}: Departures Table'`,
-            //index: index + 1,
+            index: index + 1,
           });
         }
       });
@@ -70,7 +69,7 @@ jQuery(document).ready(function ($) {
         if (isCountryTemplate > 0) {
           if (idsUnderCountry.includes(parseInt(entries.ID))) {
             // Convert entries.ID to number for comparison
-            newProductListing.push({
+            productListing.push({
               item_id: entries.product_id,
               item_name: entries.travel_name,
               item_brand: "Agencija Oskar",
@@ -88,11 +87,11 @@ jQuery(document).ready(function ($) {
               product_type: "Main",
               travel_age_group: undefined,
               item_list_name: `${entries.travel_name}: Departures Table'`,
-              //index: index + 1,
+              index: index + 1,
             });
           }
         } else {
-          newProductListing.push({
+          productListing.push({
             item_id: entries.product_id,
             item_name: entries.travel_name,
             item_brand: "Agencija Oskar",
@@ -110,15 +109,11 @@ jQuery(document).ready(function ($) {
             product_type: "Main",
             travel_age_group: undefined,
             item_list_name: `${entries.travel_name}: Departures Table'`,
-            //index: index + 1,
+            index: index + 1,
           });
         }
       });
     }
-
-    newProductListing.map((entries, index) => {
-      entries["index"] = index + 1;
-    });
 
     // PUSH TO GA4
     window.dataLayer.push({ event_params: null, ecommerce: null });
