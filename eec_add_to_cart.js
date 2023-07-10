@@ -82,6 +82,8 @@ jQuery(document).ready(function ($) {
     getDepartureId = $(this).data("departure-id");
   });
 
+  let addOnName;
+
   let additionalPerson = () => {
     let additionalPerson = [];
     oskarDepartures.map((entries, index) => {
@@ -165,8 +167,8 @@ jQuery(document).ready(function ($) {
     oskarDepartures.map((entries, index) => {
       if (entries.ID == getDepartureId) {
         addOnProduct.push({
-          item_id: entries.product_id,
-          item_name: entries.travel_name,
+          item_id: undefined,
+          item_name: addOnName,
           item_brand: "Agencija Oskar",
           item_category: "Travel",
           item_category2: entries.country_name,
@@ -204,8 +206,8 @@ jQuery(document).ready(function ($) {
     oskarDepartures.map((entries, index) => {
       if (entries.ID == getDepartureId) {
         addOnProduct.push({
-          item_id: entries.product_id,
-          item_name: entries.travel_name,
+          item_id: undefined,
+          item_name: addOnName,
           item_brand: "Agencija Oskar",
           item_category: "Travel",
           item_category2: entries.country_name,
@@ -317,6 +319,7 @@ jQuery(document).ready(function ($) {
             async function () {
               let rawValue = $(this).parent().find("span").text();
               let addOnPrice;
+              addOnName = $(this).parent().text().replace(/\s+/g, " ").trim();
 
               if (rawValue.indexOf("%") > -1) {
                 cancellationPercentage = rawValue
