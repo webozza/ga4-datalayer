@@ -1,10 +1,32 @@
 jQuery(document).ready(function ($) {
-  let eecViewItem = () => {
+  let eecViewItem = (departure_id) => {
     window.dataLayer.push({ event_params: null, ecommerce: null });
 
-    let actualPrice = $(".single-potovanja .price a")
-      .text()
-      .replaceAll(" ", "");
+    let viewItem = [];
+
+    oskarDepartures2.map((entries, index) => {
+      if (entries.ID == departure_id) {
+        viewItem.push({
+          item_id: entries.product_id,
+          item_name: entries.travel_name,
+          item_brand: "Agencija Oskar",
+          item_category: "Travel",
+          item_category2: entries.country_name,
+          price: entries.actual_price,
+          discount: entries.price - entries.actual_price,
+          affiliation: undefined,
+          travel_departure_date: entries.departure_start_date,
+          travel_style: entries.travel_style,
+          travel_type: undefined,
+          travel_group_size: entries.velikost_skupine,
+          travel_duration: entries.travel_duration,
+          travel_guide_id: undefined,
+          product_type: "Main",
+          travel_age_group: undefined,
+          quantity: 1,
+        });
+      }
+    });
 
     window.dataLayer.push({
       event: "RO_event_EEC",
@@ -13,31 +35,13 @@ jQuery(document).ready(function ($) {
       },
       ecommerce: {
         currency: "EUR",
-        items: [
-          {
-            item_id: oskarDepartures.product_id,
-            item_name: oskarDepartures.travel_name,
-            item_brand: "Agencija Oskar",
-            item_category: "Travel",
-            item_category2: oskarDepartures.country_name,
-            price: actualPrice,
-            discount: oskarDepartures.price - actualPrice,
-            affiliation: undefined,
-            travel_departure_date: oskarDepartures.departure_start_date,
-            travel_style: oskarDepartures.travel_style,
-            travel_type: undefined,
-            travel_group_size: oskarDepartures.velikost_skupine,
-            travel_duration: oskarDepartures.travel_duration,
-            travel_guide_id: oskarDepartures.travel_guide_id,
-            product_type: "Main",
-            travel_age_group: undefined,
-          },
-        ],
+        items: viewItem,
       },
     });
   };
 
   if ($("body").hasClass("single-potovanja")) {
-    eecViewItem();
+    let departure_id = $(".application-form-cta").eq(0).data("departure-id");
+    eecViewItem(departure_id);
   }
 });
