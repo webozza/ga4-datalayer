@@ -10,16 +10,26 @@ jQuery(document).ready(function ($) {
   let calculateAdditionalPayments = (newFormData) => {
     const additionalPaymentPrices = [];
 
-    for (const passenger of newFormData.passengers) {
-      for (const payment of passenger.all_extra_payments) {
-        if (payment.extra_payment_price && payment.extra_payment_percentage) {
-          const price = parseFloat(payment.extra_payment_price);
-          const percentage = parseFloat(payment.extra_payment_percentage);
-          const salePrice = parseFloat(passenger.sale_price);
+    if (newFormData.passengers && Array.isArray(newFormData.passengers)) {
+      for (const passenger of newFormData.passengers) {
+        if (
+          passenger.all_extra_payments &&
+          Array.isArray(passenger.all_extra_payments)
+        ) {
+          for (const payment of passenger.all_extra_payments) {
+            if (
+              payment.extra_payment_price &&
+              payment.extra_payment_percentage
+            ) {
+              const price = parseFloat(payment.extra_payment_price);
+              const percentage = parseFloat(payment.extra_payment_percentage);
+              const salePrice = parseFloat(passenger.sale_price);
 
-          const additionalPrice = (salePrice * percentage).toFixed(2);
+              const additionalPrice = (salePrice * percentage).toFixed(2);
 
-          additionalPaymentPrices.push(parseFloat(additionalPrice));
+              additionalPaymentPrices.push(parseFloat(additionalPrice));
+            }
+          }
         }
       }
     }
