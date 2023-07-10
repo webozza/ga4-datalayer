@@ -43,7 +43,7 @@ jQuery(document).ready(function ($) {
       0
     );
 
-    additionalPrices = sumOfAdditionalPayments;
+    return sumOfAdditionalPayments;
   };
 
   // prepare other data
@@ -90,7 +90,7 @@ jQuery(document).ready(function ($) {
       console.log("settings ->", settings);
       var formData = new URLSearchParams(settings.data);
       let newFormData = Object.fromEntries(formData);
-      calculateAdditionalPayments(newFormData);
+      additionalPrices = calculateAdditionalPayments(newFormData);
 
       console.log("new form data", newFormData);
       cartQuantity = newFormData["application_form[passengers_number]"];
