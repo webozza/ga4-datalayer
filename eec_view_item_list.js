@@ -38,7 +38,10 @@ jQuery(document).ready(function ($) {
               product_type: "Main",
               travel_age_group: undefined,
               item_list_name: `${entries.travel_name}: Departures Table'`,
-              index: index + 1,
+              // index: index + 1,
+            });
+            productsByCountry.map((entries, index) => {
+              entries["index"] = index + 1;
             });
             productListing = productsByCountry;
           }
