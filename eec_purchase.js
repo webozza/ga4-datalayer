@@ -42,12 +42,12 @@ jQuery(document).ready(function ($) {
 
             // Check if both 'extra_payment_price' and 'extra_payment_percentage' exist
             if (
-              payment["extra_payment_price[]"] &&
-              payment["extra_payment_percentage[]"]
+              payment["extra_payment_price"] &&
+              payment["extra_payment_percentage"]
             ) {
-              const price = parseFloat(payment["extra_payment_price[]"]);
+              const price = parseFloat(payment["extra_payment_price"]);
               const percentage = parseFloat(
-                payment["extra_payment_percentage[]"]
+                payment["extra_payment_percentage"]
               );
               const salePrice = parseFloat(passenger["sale_price"]);
 
