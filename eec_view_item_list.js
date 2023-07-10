@@ -75,10 +75,11 @@ jQuery(document).ready(function ($) {
     if (curLoc.indexOf("?dezela") > -1) {
       let filteredDepartureIds = [];
 
-      $(".cr_row_active_all").each(function () {
+      $(".cr_row_active_all, .cr_row_active").each(function () {
         let departured_id = $(this).data("id");
         filteredDepartureIds.push(departured_id);
       });
+
       if ($("body").hasClass("single-potovanja")) {
         oskarDepartures2.map((entries, index) => {
           if (isCountryTemplate > 0) {
