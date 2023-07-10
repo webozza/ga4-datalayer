@@ -11,6 +11,15 @@ jQuery(document).ready(function ($) {
       function () {
         let paymentMethodSelected;
         let cartPrice;
+        let adultQuantity = $('[ng-click="addAdult()"]')
+          .prev()
+          .text()
+          .match(/\d+/)[0];
+        let childQuanity = $('[ng-click="addChild()"]')
+          .prev()
+          .text()
+          .match(/\d+/)[0];
+
         let checkedPaymentOption = $(this)[0].checked;
         if (checkedPaymentOption) {
           let inputName = $(this).attr("name");
@@ -43,7 +52,7 @@ jQuery(document).ready(function ($) {
                 travel_guide_id: undefined,
                 product_type: "Main",
                 travel_age_group: undefined,
-                quantity: 1,
+                quantity: Number(adultQuantity) + Number(childQuanity) + 1,
               });
             }
           });
@@ -68,7 +77,7 @@ jQuery(document).ready(function ($) {
                 travel_guide_id: undefined,
                 product_type: "Main",
                 travel_age_group: undefined,
-                quantity: 1,
+                quantity: Number(adultQuantity) + Number(childQuanity) + 1,
               });
             }
           });
