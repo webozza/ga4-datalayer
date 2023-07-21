@@ -83,7 +83,7 @@ jQuery(document).ready(function ($) {
               product_type: "Main",
               travel_age_group: undefined,
               item_list_name: "Status of departures",
-              index: bannerIndex,
+              index: bannerIndex + 1,
             });
           }
         });
