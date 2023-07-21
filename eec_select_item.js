@@ -60,6 +60,7 @@ jQuery(document).ready(function ($) {
       // PREPARE THE VARIABLES
       let getID = $(this).data("travel-id");
       let bannerIndex = $(this).parent().index();
+      let bannerFilter = $("#potovanja .filter a.active").text();
 
       if ($("body").hasClass("single-potovanja")) {
         let hold2 = [];
@@ -82,7 +83,7 @@ jQuery(document).ready(function ($) {
               travel_guide_id: undefined,
               product_type: "Main",
               travel_age_group: undefined,
-              item_list_name: `${entries.travel_name}: Travel | ${entries.travel_style}`,
+              item_list_name: `${entries.travel_name}: Travel | ${bannerFilter}`,
               index: bannerIndex + 1,
             });
           }
@@ -109,7 +110,7 @@ jQuery(document).ready(function ($) {
               travel_guide_id: undefined,
               product_type: "Main",
               travel_age_group: undefined,
-              item_list_name: `${entries.travel_name}: Travel | ${entries.travel_style}`,
+              item_list_name: `${entries.travel_name}: Travel | ${bannerFilter}`,
               index: bannerIndex + 1,
             });
           }
