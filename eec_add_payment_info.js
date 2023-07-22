@@ -41,6 +41,7 @@ jQuery(document).ready(function ($) {
 
         // handle initial extra bed
         let extraBedInitial = $('[name="is_on_extra_bed"]');
+        let extraPaymentsInitial = $('[name="extra_payments[]"]');
 
         if ($("body").hasClass("single-potovanja")) {
           oskarDepartures2.map((entries, index) => {
@@ -86,6 +87,42 @@ jQuery(document).ready(function ($) {
                   quantity: 1,
                 });
               }
+              extraPaymentsInitial.each(function () {
+                let surchargeCheckbox = $(this);
+                if (surchargeCheckbox.is(":checked")) {
+                  let surchargeValue = surchargeCheckbox.val();
+                  let extraData = JSON.parse(surchargeValue);
+                  let extraPaymentName = extraData.extra_payment_name;
+                  let extraPaymentPrice;
+                  if (extraData.extra_payment_price == "") {
+                    extraPaymentPrice = (
+                      Number(entries.actual_price) *
+                      Number(extraData.extra_payment_percentage)
+                    ).toFixed(2);
+                  } else {
+                    extraPaymentPrice = extraData.extra_payment_price;
+                  }
+                  addPaymentInfo.push({
+                    item_id: undefined,
+                    item_name: extraPaymentName,
+                    item_brand: "Agencija Oskar",
+                    item_category: "Travel",
+                    item_category2: entries.country_name,
+                    price: extraPaymentPrice,
+                    discount: entries.price - entries.actual_price,
+                    affiliation: undefined,
+                    travel_departure_date: entries.departure_start_date,
+                    travel_style: entries.travel_style,
+                    travel_type: undefined,
+                    travel_group_size: entries.velikost_skupine,
+                    travel_duration: entries.travel_duration,
+                    travel_guide_id: undefined,
+                    product_type: "Add-on",
+                    travel_age_group: undefined,
+                    quantity: 1,
+                  });
+                }
+              });
             }
           });
         } else {
@@ -132,6 +169,42 @@ jQuery(document).ready(function ($) {
                   quantity: 1,
                 });
               }
+              extraPaymentsInitial.each(function () {
+                let surchargeCheckbox = $(this);
+                if (surchargeCheckbox.is(":checked")) {
+                  let surchargeValue = surchargeCheckbox.val();
+                  let extraData = JSON.parse(surchargeValue);
+                  let extraPaymentName = extraData.extra_payment_name;
+                  let extraPaymentPrice;
+                  if (extraData.extra_payment_price == "") {
+                    extraPaymentPrice = (
+                      Number(entries.actual_price) *
+                      Number(extraData.extra_payment_percentage)
+                    ).toFixed(2);
+                  } else {
+                    extraPaymentPrice = extraData.extra_payment_price;
+                  }
+                  addPaymentInfo.push({
+                    item_id: undefined,
+                    item_name: extraPaymentName,
+                    item_brand: "Agencija Oskar",
+                    item_category: "Travel",
+                    item_category2: entries.country_name,
+                    price: extraPaymentPrice,
+                    discount: entries.price - entries.actual_price,
+                    affiliation: undefined,
+                    travel_departure_date: entries.departure_start_date,
+                    travel_style: entries.travel_style,
+                    travel_type: undefined,
+                    travel_group_size: entries.velikost_skupine,
+                    travel_duration: entries.travel_duration,
+                    travel_guide_id: undefined,
+                    product_type: "Add-on",
+                    travel_age_group: undefined,
+                    quantity: 1,
+                  });
+                }
+              });
             }
           });
         }
