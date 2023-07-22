@@ -172,6 +172,7 @@ jQuery(document).ready(function ($) {
           });
         }
         removedPersonSurcharges[0].map((entries) => {
+          console.log(entries);
           if (entries.is(":checked") == true) {
             additionalPerson.push({
               item_id: undefined,
