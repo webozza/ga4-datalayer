@@ -153,7 +153,7 @@ jQuery(document).ready(function ($) {
         if (removedPersonExtraBed.is(":checked") == true) {
           additionalPerson.push({
             item_id: undefined,
-            item_name: addOnName,
+            item_name: "Želim bivati v sobi z dodatnim ležiščem",
             item_brand: "Agencija Oskar",
             item_category: "Travel",
             item_category2: entries.country_name,
