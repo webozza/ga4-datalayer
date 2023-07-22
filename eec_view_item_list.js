@@ -73,6 +73,7 @@ jQuery(document).ready(function ($) {
     let newProductListing = [];
 
     if (curLoc.indexOf("?dezela") > -1) {
+      // filtered view...
       let filteredDepartureIds = [];
 
       $(".cr_row_active_all, .cr_row_active").each(function () {
@@ -104,7 +105,7 @@ jQuery(document).ready(function ($) {
                   travel_guide_id: undefined,
                   product_type: "Main",
                   travel_age_group: undefined,
-                  item_list_name: `${entries.travel_name}: Departures Table | ${formattedFilters}`,
+                  item_list_name: `Status of departures | ${formattedFilters}`,
                   //index: index + 1,
                 });
               }
@@ -128,7 +129,7 @@ jQuery(document).ready(function ($) {
                 travel_guide_id: undefined,
                 product_type: "Main",
                 travel_age_group: undefined,
-                item_list_name: `${entries.travel_name}: Departures Table | ${formattedFilters}`,
+                item_list_name: `Status of departures | ${formattedFilters}`,
                 //index: index + 1,
               });
             }
@@ -157,7 +158,7 @@ jQuery(document).ready(function ($) {
                   travel_guide_id: undefined,
                   product_type: "Main",
                   travel_age_group: undefined,
-                  item_list_name: `${entries.travel_name}: Departures Table | ${formattedFilters}`,
+                  item_list_name: `Status of departures | ${formattedFilters}`,
                   //index: index + 1,
                 });
               }
@@ -181,7 +182,7 @@ jQuery(document).ready(function ($) {
                 travel_guide_id: undefined,
                 product_type: "Main",
                 travel_age_group: undefined,
-                item_list_name: `${entries.travel_name}: Departures Table | ${formattedFilters}`,
+                item_list_name: `Status of departures | ${formattedFilters}`,
                 //index: index + 1,
               });
             }
@@ -215,7 +216,7 @@ jQuery(document).ready(function ($) {
                 travel_guide_id: undefined,
                 product_type: "Main",
                 travel_age_group: undefined,
-                item_list_name: `${entries.travel_name}: Departures Table`,
+                item_list_name: "Status of departures",
                 //index: index + 1,
               });
             }
@@ -237,7 +238,7 @@ jQuery(document).ready(function ($) {
               travel_guide_id: undefined,
               product_type: "Main",
               travel_age_group: undefined,
-              item_list_name: `${entries.travel_name}: Departures Table`,
+              item_list_name: "Status of departures",
               //index: index + 1,
             });
           }
@@ -264,7 +265,7 @@ jQuery(document).ready(function ($) {
                 travel_guide_id: undefined,
                 product_type: "Main",
                 travel_age_group: undefined,
-                item_list_name: `${entries.travel_name}: Departures Table`,
+                item_list_name: "Status of departures",
                 //index: index + 1,
               });
             }
@@ -286,7 +287,7 @@ jQuery(document).ready(function ($) {
               travel_guide_id: undefined,
               product_type: "Main",
               travel_age_group: undefined,
-              item_list_name: `${entries.travel_name}: Departures Table`,
+              item_list_name: "Status of departures",
               //index: index + 1,
             });
           }
