@@ -1,238 +1,146 @@
 jQuery(document).ready(function ($) {
   var pageHasList = $(".table--departures").length;
-  var isCountryTemplate = $(".cr--listing").length;
-  var idsUnderCountry = [];
 
-  if (isCountryTemplate > 0 || $("body").hasClass("single-potovanja")) {
-    $(".cr--listing").each(function () {
-      let departureIds = $(this).data("id");
-      idsUnderCountry.push(departureIds);
+  // PREPARE THE VARIABLES
+  let selectedItem = async () => {
+    let productData = [];
+
+    // Table
+    $(".cr_product_link a").click(async function (e) {
+      let thisLink = $(this).attr("href");
+      e.preventDefault();
+      // PREPARE THE VARIABLES
+      let getID = $(this).parent().parent().data("id");
+      oskarDepartures.map((entries, index) => {
+        if (entries.ID == getID) {
+          productData.push({
+            item_id: entries.product_id,
+            item_name: entries.travel_name,
+            item_brand: "Agencija Oskar",
+            item_category: "Travel",
+            item_category2: entries.country_name,
+            price: entries.actual_price,
+            discount: entries.price - entries.actual_price,
+            affiliation: undefined,
+            travel_departure_date: entries.departure_start_date,
+            travel_style: entries.travel_style,
+            travel_type: undefined,
+            travel_group_size: entries.velikost_skupine,
+            travel_duration: entries.travel_duration,
+            travel_guide_id: undefined,
+            product_type: "Main",
+            travel_age_group: undefined,
+            item_list_name: "Status of departures",
+            index: index + 1,
+          });
+        }
+      });
+
+      // PUSH TO GA4
+      window.dataLayer.push({ event_params: null, ecommerce: null });
+
+      window.dataLayer.push({
+        event: "RO_event_EEC",
+        event_params: {
+          gtm_name: "EEC_select_item",
+        },
+        ecommerce: {
+          currency: "EUR",
+          items: productData,
+        },
+        eventCallback: function () {
+          // optional
+          document.location = thisLink;
+        },
+      });
     });
-  }
 
-  let convertStringToObject = (string) => {
-    if (string.startsWith("?")) {
-      string = string.substring(1);
-    }
+    // Banner
+    $(".grid-overlay--link").click(async function (e) {
+      let thisLink = $(this).attr("href");
+      e.preventDefault();
+      // PREPARE THE VARIABLES
+      let getID = $(this).data("travel-id");
+      let bannerIndex = $(this).parent().index();
+      let bannerFilter = $("#potovanja .filter a.active").text();
 
-    const pairs = string.split("&");
-    const obj = {};
-
-    pairs.forEach((pair) => {
-      const [key, value] = pair.split("=");
-      const decodedKey = decodeURIComponent(key);
-      const decodedValue = decodeURIComponent(value);
-
-      if (obj.hasOwnProperty(decodedKey)) {
-        obj[decodedKey].push(decodedValue);
+      if ($("body").hasClass("single-potovanja")) {
+        let hold2 = [];
+        oskarDepartures2.map((entries, index) => {
+          if (entries.travel_id == getID) {
+            hold2.push({
+              // item_id: entries.product_id,
+              item_name: entries.travel_name,
+              item_brand: "Agencija Oskar",
+              item_category: "Travel",
+              item_category2: entries.country_name,
+              // price: entries.actual_price,
+              // discount: entries.price - entries.actual_price,
+              // affiliation: undefined,
+              // travel_departure_date: entries.departure_start_date,
+              // travel_style: entries.travel_style,
+              // travel_type: undefined,
+              // travel_group_size: entries.velikost_skupine,
+              // travel_duration: entries.travel_duration,
+              // travel_guide_id: undefined,
+              product_type: "Main",
+              // travel_age_group: undefined,
+              item_list_name: `${entries.travel_name}: Travel | ${bannerFilter}`,
+              index: bannerIndex + 1,
+            });
+          }
+        });
+        productData = [hold2[0]];
       } else {
-        obj[decodedKey] = [decodedValue];
-      }
-    });
-
-    return obj;
-  };
-
-  let convertObjectToString = (obj) => {
-    let str = "";
-
-    for (const key in obj) {
-      if (obj.hasOwnProperty(key)) {
-        const values = obj[key];
-        const decodedKey = decodeURIComponent(key.replace("[]", ""));
-        const decodedValue = decodeURIComponent(values[0]);
-
-        str += `${decodedKey}: ${decodedValue} | `;
-      }
-    }
-
-    str = str.slice(0, -3);
-
-    return str;
-  };
-
-  let curLoc = window.location.href;
-  let filters;
-  let formattedFilters;
-
-  if (curLoc.indexOf("?dezela") > -1) {
-    filters = convertStringToObject(window.location.search);
-    formattedFilters = convertObjectToString(filters);
-    console.log(formattedFilters);
-  }
-
-  let newProductListing = [];
-  let pushedItems = {}; // Lookup object to store the items that have already been pushed
-
-  let pushProductToList = (entries, item_list_name, index) => {
-    newProductListing.push({
-      item_id: entries.product_id,
-      item_name: entries.travel_name,
-      item_brand: "Agencija Oskar",
-      item_category: "Travel",
-      item_category2: entries.country_name,
-      price: entries.actual_price,
-      discount: entries.price - entries.actual_price,
-      affiliation: undefined,
-      travel_departure_date: entries.departure_start_date,
-      travel_style: entries.travel_style,
-      travel_type: undefined,
-      travel_group_size: entries.velikost_skupine,
-      travel_duration: entries.travel_duration,
-      travel_guide_id: undefined,
-      product_type: "Main",
-      travel_age_group: undefined,
-      item_list_name: item_list_name,
-      index: index,
-    });
-  };
-
-  if (curLoc.indexOf("?dezela") > -1) {
-    let filteredDepartureIds = [];
-
-    $(".cr_row_active_all, .cr_row_active").each(function () {
-      let departured_id = $(this).data("id");
-      filteredDepartureIds.push(departured_id);
-    });
-
-    if ($("body").hasClass("single-potovanja")) {
-      oskarDepartures2.map((entries, index) => {
-        if (
-          isCountryTemplate > 0 &&
-          idsUnderCountry.includes(parseInt(entries.ID))
-        ) {
-          if (filteredDepartureIds.includes(parseInt(entries.ID))) {
-            if (!pushedItems[entries.ID]) {
-              pushProductToList(
-                entries,
-                `Departures Table | ${formattedFilters}`,
-                index + 1
-              );
-              pushedItems[entries.ID] = true;
-            }
-          }
-        } else {
-          if (filteredDepartureIds.includes(parseInt(entries.ID))) {
-            if (!pushedItems[entries.ID]) {
-              pushProductToList(entries, "Departures Table", index + 1);
-              pushedItems[entries.ID] = true;
-            }
-          }
-        }
-      });
-    } else {
-      oskarDepartures.map((entries, index) => {
-        if (
-          isCountryTemplate > 0 &&
-          idsUnderCountry.includes(parseInt(entries.ID))
-        ) {
-          if (filteredDepartureIds.includes(parseInt(entries.ID))) {
-            if (!pushedItems[entries.ID]) {
-              pushProductToList(
-                entries,
-                `Departures Table | ${formattedFilters}`,
-                index + 1
-              );
-              pushedItems[entries.ID] = true;
-            }
-          }
-        } else {
-          if (filteredDepartureIds.includes(parseInt(entries.ID))) {
-            if (!pushedItems[entries.ID]) {
-              pushProductToList(entries, "Departures Table", index + 1);
-              pushedItems[entries.ID] = true;
-            }
-          }
-        }
-      });
-    }
-  } else {
-    if ($("body").hasClass("single-potovanja")) {
-      oskarDepartures2.map((entries, index) => {
-        if (
-          isCountryTemplate > 0 &&
-          idsUnderCountry.includes(parseInt(entries.ID))
-        ) {
-          if (!pushedItems[entries.ID]) {
-            pushProductToList(entries, "Departures Table", index + 1);
-            pushedItems[entries.ID] = true;
-          }
-
-          $(".grid-overlay--link").each(function () {
-            let thisBanner = $(this);
-            let bannerId = thisBanner.data("travel-id");
-            let bannerIndex = thisBanner.parent().index();
-            let bannerFilter = $("#potovanja .filter a.active").text();
-            let foundMatchingEntry = false;
-
-            oskarDepartures.map((entries) => {
-              if (entries.travel_id == bannerId && !foundMatchingEntry) {
-                if (!pushedItems[entries.ID]) {
-                  pushProductToList(
-                    entries,
-                    `${entries.travel_name}: Travel | ${bannerFilter}`,
-                    bannerIndex + 1
-                  );
-                  pushedItems[entries.ID] = true;
-                }
-                foundMatchingEntry = true;
-                return false;
-              }
+        let hold = [];
+        oskarDepartures.map((entries, index) => {
+          if (entries.travel_id == getID) {
+            hold.push({
+              // item_id: entries.product_id,
+              item_name: entries.travel_name,
+              item_brand: "Agencija Oskar",
+              item_category: "Travel",
+              item_category2: entries.country_name,
+              // price: entries.actual_price,
+              // discount: entries.price - entries.actual_price,
+              // affiliation: undefined,
+              // travel_departure_date: entries.departure_start_date,
+              // travel_style: entries.travel_style,
+              // travel_type: undefined,
+              // travel_group_size: entries.velikost_skupine,
+              // travel_duration: entries.travel_duration,
+              // travel_guide_id: undefined,
+              product_type: "Main",
+              // travel_age_group: undefined,
+              item_list_name: `${entries.travel_name}: Travel | ${bannerFilter}`,
+              index: bannerIndex + 1,
             });
-          });
-        }
-      });
-    } else {
-      oskarDepartures.map((entries, index) => {
-        if (
-          isCountryTemplate > 0 &&
-          idsUnderCountry.includes(parseInt(entries.ID))
-        ) {
-          if (!pushedItems[entries.ID]) {
-            pushProductToList(entries, "Departures Table", index + 1);
-            pushedItems[entries.ID] = true;
           }
+        });
+        productData = [hold[0]];
+      }
 
-          $(".grid-overlay--link").each(function () {
-            let thisBanner = $(this);
-            let bannerId = thisBanner.data("travel-id");
-            let bannerIndex = thisBanner.parent().index();
-            let bannerFilter = $("#potovanja .filter a.active").text();
-            let foundMatchingEntry = false;
+      // PUSH TO GA4
+      window.dataLayer.push({ event_params: null, ecommerce: null });
 
-            oskarDepartures.map((entries) => {
-              if (entries.travel_id == bannerId && !foundMatchingEntry) {
-                if (!pushedItems[entries.ID]) {
-                  pushProductToList(
-                    entries,
-                    `${entries.travel_name}: Travel | ${bannerFilter}`,
-                    bannerIndex + 1
-                  );
-                  pushedItems[entries.ID] = true;
-                }
-                foundMatchingEntry = true;
-                return false;
-              }
-            });
-          });
-        }
+      window.dataLayer.push({
+        event: "RO_event_EEC",
+        event_params: {
+          gtm_name: "EEC_select_item",
+        },
+        ecommerce: {
+          currency: "EUR",
+          items: productData,
+        },
+        eventCallback: function () {
+          // optional
+          document.location = thisLink;
+        },
       });
-    }
-  }
-
-  window.dataLayer.push({ event_params: null, ecommerce: null });
-  window.dataLayer.push({
-    event: "RO_event_EEC",
-    event_params: {
-      gtm_name: "EEC_view_item_list",
-    },
-    ecommerce: {
-      currency: "EUR",
-      items: newProductListing,
-    },
-  });
+    });
+  };
 
   if (pageHasList > 0) {
-    productListView();
+    selectedItem();
   }
 });
