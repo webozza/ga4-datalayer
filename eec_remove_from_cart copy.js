@@ -5,8 +5,7 @@ jQuery(document).ready(function ($) {
     depId = $(this).data("departure-id");
   });
 
-  let extaBedInitial;
-  let removeFromCart = async () => {
+  let removeFromCart = () => {
     let removeFromCartItems = [];
 
     if ($("body").hasClass("single-potovanja")) {
@@ -31,27 +30,6 @@ jQuery(document).ready(function ($) {
             travel_age_group: undefined,
             quantity: 1,
           });
-          if (extaBedInitial.is(":checked") == true) {
-            removeFromCartItems.push({
-              item_id: undefined,
-              item_name: "Želim bivati v sobi z dodatnim ležiščem",
-              item_brand: "Agencija Oskar",
-              item_category: "Travel",
-              item_category2: entries.country_name,
-              price: 0,
-              discount: entries.price - entries.actual_price,
-              affiliation: undefined,
-              travel_departure_date: entries.departure_start_date,
-              travel_style: entries.travel_style,
-              travel_type: undefined,
-              travel_group_size: entries.velikost_skupine,
-              travel_duration: entries.travel_duration,
-              travel_guide_id: undefined,
-              product_type: "Add-on",
-              travel_age_group: undefined,
-              quantity: 1,
-            });
-          }
         }
       });
     } else {
@@ -76,27 +54,6 @@ jQuery(document).ready(function ($) {
             travel_age_group: undefined,
             quantity: 1,
           });
-          if (extaBedInitial.is(":checked") == true) {
-            removeFromCartItems.push({
-              item_id: undefined,
-              item_name: "Želim bivati v sobi z dodatnim ležiščem",
-              item_brand: "Agencija Oskar",
-              item_category: "Travel",
-              item_category2: entries.country_name,
-              price: 0,
-              discount: entries.price - entries.actual_price,
-              affiliation: undefined,
-              travel_departure_date: entries.departure_start_date,
-              travel_style: entries.travel_style,
-              travel_type: undefined,
-              travel_group_size: entries.velikost_skupine,
-              travel_duration: entries.travel_duration,
-              travel_guide_id: undefined,
-              product_type: "Add-on",
-              travel_age_group: undefined,
-              quantity: 1,
-            });
-          }
         }
       });
     }
@@ -129,14 +86,10 @@ jQuery(document).ready(function ($) {
           console.log(formStatus);
         });
 
-        $(".application-form-close").one("click", async function (e) {
+        $(".application-form-close").one("click", function () {
           if (formStatus == true) {
-            e.preventDefault();
-            extaBedInitial = $('[name="is_on_extra_bed"]');
-            await removeFromCart();
+            removeFromCart();
             console.log(formStatus);
-            // Unbind the click event after removeFromCart is called
-            $(".application-form-close").off("click");
           } else {
             console.log(formStatus);
           }
