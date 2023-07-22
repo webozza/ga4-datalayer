@@ -125,6 +125,9 @@ jQuery(document).ready(function ($) {
 
   let removeAdditionalPerson = () => {
     let additionalPerson = [];
+
+    console.log($(this));
+
     oskarDepartures.map((entries, index) => {
       if (entries.ID == getDepartureId) {
         additionalPerson.push({
