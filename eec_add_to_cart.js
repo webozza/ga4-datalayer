@@ -312,7 +312,6 @@ jQuery(document).ready(function ($) {
                 .parent()
                 .parent()
                 .find('[ng-model="adult.is_on_extra_bed"]');
-              console.log(removedPerson);
               removeConfirmation();
             });
 
