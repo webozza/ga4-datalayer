@@ -128,16 +128,17 @@ jQuery(document).ready(function ($) {
           formStatus = $(".application-form--content--inner--nav--item")
             .eq(0)
             .hasClass("active");
-          console.log(formStatus);
         });
 
-        $(".application-form-close").one("click", async function () {
+        $(".application-form-close").one("click", async function (e) {
           if (formStatus == true) {
+            e.preventDefault();
             extaBedInitial = $('[name="is_on_extra_bed"]');
             await removeFromCart();
-            console.log(formStatus);
+            $(this).unbind("click");
+            $(this).click();
           } else {
-            console.log(formStatus);
+            // do nothing
           }
         });
       }, 2000);
