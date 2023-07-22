@@ -204,9 +204,10 @@ jQuery(document).ready(function ($) {
             let extraPaymentName = extraData.extra_payment_name;
             let extraPaymentPrice;
             if ((extraData.extra_payment_price = "")) {
-              extraPaymentPrice =
+              extraPaymentPrice = (
                 Number(entries.actual_price) *
-                Number(extraData.extra_payment_percentage);
+                Number(extraData.extra_payment_percentage)
+              ).toFixed(2);
             } else {
               extraPaymentPrice = extraData.extra_payment_price;
             }
