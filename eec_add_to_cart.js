@@ -123,7 +123,7 @@ jQuery(document).ready(function ($) {
     });
   };
 
-  let removedPerson;
+  let removedPersonExtraBed;
 
   let removeAdditionalPerson = () => {
     let additionalPerson = [];
@@ -149,6 +149,27 @@ jQuery(document).ready(function ($) {
           travel_age_group: undefined,
           quantity: 1,
         });
+        if (removedPersonExtraBed.is(":checked") == true) {
+          additionalPerson.push({
+            item_id: undefined,
+            item_name: addOnName,
+            item_brand: "Agencija Oskar",
+            item_category: "Travel",
+            item_category2: entries.country_name,
+            price: addOnPrice,
+            discount: entries.price - entries.actual_price,
+            affiliation: undefined,
+            travel_departure_date: entries.departure_start_date,
+            travel_style: entries.travel_style,
+            travel_type: undefined,
+            travel_group_size: entries.velikost_skupine,
+            travel_duration: entries.travel_duration,
+            travel_guide_id: undefined,
+            product_type: "Add-on",
+            travel_age_group: undefined,
+            quantity: 1,
+          });
+        }
       }
     });
     window.dataLayer.push({ event_params: null, ecommerce: null });
@@ -286,7 +307,11 @@ jQuery(document).ready(function ($) {
             .find('[ng-click="removeAdult(key)"]')
             .off("click")
             .on("click", function () {
-              removedPerson = $(this);
+              removedPersonExtraBed = $(this)
+                .parent()
+                .parent()
+                .parent()
+                .find('[ng-model="adult.is_on_extra_bed"]');
               console.log(removedPerson);
               removeConfirmation();
             });
