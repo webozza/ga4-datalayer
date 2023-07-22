@@ -196,8 +196,9 @@ jQuery(document).ready(function ($) {
         //     });
         //   }
         // });
-        removedPersonSurcharges.each(function () {
-          let surchargeCheckbox = $(this);
+
+        for (let i = 0; i < removedPersonSurcharges.length; i++) {
+          let surchargeCheckbox = $(removedPersonSurcharges[i]);
           if (surchargeCheckbox.is(":checked")) {
             let surchargeValue = surchargeCheckbox.val();
             let extraData = JSON.parse(surchargeValue);
@@ -223,7 +224,7 @@ jQuery(document).ready(function ($) {
               quantity: 1,
             });
           }
-        });
+        }
       }
     });
     window.dataLayer.push({ event_params: null, ecommerce: null });
