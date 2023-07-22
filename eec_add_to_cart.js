@@ -357,12 +357,14 @@ jQuery(document).ready(function ($) {
 
           let removeConfirmation = () => {
             if (!confirmationTriggered) {
-              $('[data-bb-handler="confirm"]')
-                .off("click")
-                .on("click", function () {
+              $(document).on(
+                "click",
+                '[data-bb-handler="confirm"]',
+                function () {
                   removeAdditionalPerson();
                   console.log("confirmed removed person");
-                });
+                }
+              );
               confirmationTriggered = true;
             }
           };
