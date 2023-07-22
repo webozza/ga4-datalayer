@@ -202,10 +202,11 @@ jQuery(document).ready(function ($) {
             let surchargeValue = surchargeCheckbox.val();
             let extraData = JSON.parse(surchargeValue);
             let extraPaymentPrice = extraData.extra_payment_price;
+            let extraPaymentName = extraData.extra_payment_name;
 
             additionalPerson.push({
               item_id: undefined,
-              item_name: addOnName,
+              item_name: extraPaymentName,
               item_brand: "Agencija Oskar",
               item_category: "Travel",
               item_category2: entries.country_name,
