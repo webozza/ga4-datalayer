@@ -23,7 +23,6 @@ jQuery(document).ready(function ($) {
           travel_guide_id: undefined,
           product_type: "Main",
           travel_age_group: undefined,
-          quantity: 1,
         });
       }
     });
