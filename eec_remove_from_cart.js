@@ -131,8 +131,8 @@ jQuery(document).ready(function ($) {
         });
 
         $(".application-form-close").one("click", async function () {
+          extraBed0 = $('[name="is_on_extra_bed"]');
           if (formStatus == true) {
-            extraBed0 = $('[name="is_on_extra_bed"]');
             removeFromCart();
             console.log(formStatus);
           } else {
