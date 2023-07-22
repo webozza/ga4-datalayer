@@ -348,6 +348,9 @@ jQuery(document).ready(function ($) {
                   )
               );
               console.log("extrapersonsurcharges", removedPersonSurcharges);
+              removedPersonSurcharges.map((entries) => {
+                console.log(entries.val());
+              });
               removeConfirmation();
             });
 
