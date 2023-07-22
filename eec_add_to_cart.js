@@ -124,7 +124,7 @@ jQuery(document).ready(function ($) {
   };
 
   let removedPersonExtraBed;
-  let removedPersonSurcharges = [];
+  let removedPersonSurcharges;
 
   let removeAdditionalPerson = () => {
     let additionalPerson = [];
@@ -196,9 +196,8 @@ jQuery(document).ready(function ($) {
         //     });
         //   }
         // });
-
-        for (let i = 0; i < removedPersonSurcharges.length; i++) {
-          let surchargeCheckbox = $(removedPersonSurcharges[i]);
+        removedPersonSurcharges.each(function () {
+          let surchargeCheckbox = $(this);
           if (surchargeCheckbox.is(":checked")) {
             let surchargeValue = surchargeCheckbox.val();
             let extraData = JSON.parse(surchargeValue);
@@ -224,7 +223,7 @@ jQuery(document).ready(function ($) {
               quantity: 1,
             });
           }
-        }
+        });
       }
     });
     window.dataLayer.push({ event_params: null, ecommerce: null });
@@ -367,16 +366,13 @@ jQuery(document).ready(function ($) {
                 .parent()
                 .parent()
                 .find('[ng-model="adult.is_on_extra_bed"]');
-              removedPersonSurcharges = [];
-              removedPersonSurcharges.push(
-                $(this)
-                  .parent()
-                  .parent()
-                  .parent()
-                  .find(
-                    '[ng-click="selectPassengerExtraPayment(extra_payment, key, true)"]'
-                  )
-              );
+              removedPersonSurcharges = $(this)
+                .parent()
+                .parent()
+                .parent()
+                .find(
+                  '[ng-click="selectPassengerExtraPayment(extra_payment, key, true)"]'
+                );
               console.log("extrapersonsurcharges", removedPersonSurcharges);
               removeConfirmation();
             });
@@ -391,16 +387,13 @@ jQuery(document).ready(function ($) {
                 .parent()
                 .parent()
                 .find('[ng-model="child.is_on_extra_bed"]');
-              removedPersonSurcharges = [];
-              removedPersonSurcharges.push(
-                $(this)
-                  .parent()
-                  .parent()
-                  .parent()
-                  .find(
-                    '[ng-click="selectPassengerExtraPayment(extra_payment, key, false)"]'
-                  )
-              );
+              removedPersonSurcharges = $(this)
+                .parent()
+                .parent()
+                .parent()
+                .find(
+                  '[ng-click="selectPassengerExtraPayment(extra_payment, key, false)"]'
+                );
               console.log("extrapersonsurcharges", removedPersonSurcharges);
               removeConfirmation();
             });
