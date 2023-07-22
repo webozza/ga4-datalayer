@@ -5,9 +5,9 @@ jQuery(document).ready(function ($) {
     depId = $(this).data("departure-id");
   });
 
-  let extaBedInitial;
   let removeFromCart = async () => {
     let removeFromCartItems = [];
+    let extaBedInitial = $('[name="is_on_extra_bed"]');
 
     if ($("body").hasClass("single-potovanja")) {
       oskarDepartures2.map((entries, index) => {
@@ -130,13 +130,9 @@ jQuery(document).ready(function ($) {
             .hasClass("active");
         });
 
-        $(".application-form-close").one("click", async function (e) {
+        $(".application-form-close").one("click", async function () {
           if (formStatus == true) {
-            e.preventDefault();
-            extaBedInitial = $('[name="is_on_extra_bed"]');
             await removeFromCart();
-            $(this).unbind("click");
-            $(this).click();
           } else {
             // do nothing
           }
