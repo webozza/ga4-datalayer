@@ -366,7 +366,6 @@ jQuery(document).ready(function ($) {
           };
 
           $('[ng-repeat="(key, adult) in adults"]')
-            .eq(-1)
             .find('[ng-click="removeAdult(key)"]')
             .off("click")
             .on("click", function () {
@@ -387,7 +386,6 @@ jQuery(document).ready(function ($) {
             });
 
           $('[ng-repeat="(key, child) in children"]')
-            .eq(-1)
             .find('[ng-click="removeChild(key)"]')
             .off("click")
             .on("click", function () {
