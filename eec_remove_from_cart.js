@@ -7,7 +7,7 @@ jQuery(document).ready(function ($) {
 
   let extraBed0;
 
-  let removeFromCart = () => {
+  let removeFromCart = async () => {
     let removeFromCartItems = [];
 
     if ($("body").hasClass("single-potovanja")) {
@@ -112,6 +112,7 @@ jQuery(document).ready(function ($) {
 
         $(".application-form-close").on("click", async function () {
           extraBed0 = $('[name="is_on_extra_bed"]');
+          await new Promise((resolve) => setTimeout(resolve, 100)); // Add a small delay to ensure the checkbox is updated
           if (formStatus == true) {
             await removeFromCart(); // Wait for removeFromCart to complete
             console.log(formStatus);
