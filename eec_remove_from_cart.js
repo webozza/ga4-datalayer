@@ -131,14 +131,11 @@ jQuery(document).ready(function ($) {
           console.log(formStatus);
         });
 
-        $(".application-form-close").one("click", async function (e) {
+        $(".application-form-close").one("click", async function () {
           if (formStatus == true) {
-            e.preventDefault();
             extaBedInitial = $('[name="is_on_extra_bed"]');
             await removeFromCart();
             console.log(formStatus);
-            // Unbind the click event after removeFromCart is called
-            $(".application-form-close").off("click");
           } else {
             console.log(formStatus);
           }
