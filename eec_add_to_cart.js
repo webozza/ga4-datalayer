@@ -201,8 +201,15 @@ jQuery(document).ready(function ($) {
           if (surchargeCheckbox.is(":checked")) {
             let surchargeValue = surchargeCheckbox.val();
             let extraData = JSON.parse(surchargeValue);
-            let extraPaymentPrice = extraData.extra_payment_price;
             let extraPaymentName = extraData.extra_payment_name;
+            let extraPaymentPrice;
+            if ((extraData.extra_payment_price = "")) {
+              extraPaymentPrice =
+                Number(entries.actual_price) *
+                Number(extraData.extra_payment_percentage);
+            } else {
+              extraPaymentPrice = extraData.extra_payment_price;
+            }
 
             additionalPerson.push({
               item_id: undefined,
