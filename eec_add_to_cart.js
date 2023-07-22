@@ -301,6 +301,7 @@ jQuery(document).ready(function ($) {
             "change",
             '[name="is_on_extra_bed"], [ng-change="passengerIsOnExtraBedHasChanged()"]',
             function () {
+              addOnName = $(this).parent().text().replace(/\s+/g, " ").trim();
               if ($(this)[0].checked) {
                 addOn(0);
               } else {
