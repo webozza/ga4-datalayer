@@ -366,9 +366,7 @@ jQuery(document).ready(function ($) {
           };
 
           // Use event delegation for click events on removeAdult and removeChild buttons
-          const parentContainer = $(
-            ".application-form--content--inner--content"
-          ); // Replace 'parent-container' with the actual parent container selector
+          const parentContainer = $("body"); // Replace 'parent-container' with the actual parent container selector
 
           parentContainer.on(
             "click",
