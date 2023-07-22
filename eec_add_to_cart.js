@@ -365,50 +365,39 @@ jQuery(document).ready(function ($) {
             }
           };
 
-          // Use event delegation for click events on removeAdult and removeChild buttons
-          const parentContainer = $("body"); // Replace 'parent-container' with the actual parent container selector
+          $(document).on("click", '[ng-click="removeAdult(key)"]', function () {
+            removedPersonExtraBed = $(this)
+              .parent()
+              .parent()
+              .parent()
+              .find('[ng-model="adult.is_on_extra_bed"]');
+            removedPersonSurcharges = $(this)
+              .parent()
+              .parent()
+              .parent()
+              .find(
+                '[ng-click="selectPassengerExtraPayment(extra_payment, key, true)"]'
+              );
+            console.log("extrapersonsurcharges", removedPersonSurcharges);
+            removeConfirmation();
+          });
 
-          parentContainer.on(
-            "click",
-            '[ng-click="removeAdult(key)"]',
-            function () {
-              removedPersonExtraBed = $(this)
-                .parent()
-                .parent()
-                .parent()
-                .find('[ng-model="adult.is_on_extra_bed"]');
-              removedPersonSurcharges = $(this)
-                .parent()
-                .parent()
-                .parent()
-                .find(
-                  '[ng-click="selectPassengerExtraPayment(extra_payment, key, true)"]'
-                );
-              console.log("extrapersonsurcharges", removedPersonSurcharges);
-              removeConfirmation();
-            }
-          );
-
-          parentContainer.on(
-            "click",
-            '[ng-click="removeChild(key)"]',
-            function () {
-              removedPersonExtraBed = $(this)
-                .parent()
-                .parent()
-                .parent()
-                .find('[ng-model="child.is_on_extra_bed"]');
-              removedPersonSurcharges = $(this)
-                .parent()
-                .parent()
-                .parent()
-                .find(
-                  '[ng-click="selectPassengerExtraPayment(extra_payment, key, false)"]'
-                );
-              console.log("extrapersonsurcharges", removedPersonSurcharges);
-              removeConfirmation();
-            }
-          );
+          $(document).on("click", '[ng-click="removeChild(key)"]', function () {
+            removedPersonExtraBed = $(this)
+              .parent()
+              .parent()
+              .parent()
+              .find('[ng-model="child.is_on_extra_bed"]');
+            removedPersonSurcharges = $(this)
+              .parent()
+              .parent()
+              .parent()
+              .find(
+                '[ng-click="selectPassengerExtraPayment(extra_payment, key, false)"]'
+              );
+            console.log("extrapersonsurcharges", removedPersonSurcharges);
+            removeConfirmation();
+          });
         };
 
         // extra bed
