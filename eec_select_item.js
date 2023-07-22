@@ -96,7 +96,7 @@ jQuery(document).ready(function ($) {
         oskarDepartures.map((entries, index) => {
           if (entries.travel_id == getID) {
             hold.push({
-              item_id: entries.product_id,
+              // item_id: entries.product_id,
               item_name: entries.travel_name,
               item_brand: "Agencija Oskar",
               item_category: "Travel",
