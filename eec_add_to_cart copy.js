@@ -365,15 +365,10 @@ jQuery(document).ready(function ($) {
             }
           };
 
-          // Use event delegation for click events on removeAdult and removeChild buttons
-          const parentContainer = $(
-            ".application-form--content--inner--content"
-          ); // Replace 'parent-container' with the actual parent container selector
-
-          parentContainer.on(
-            "click",
-            '[ng-click="removeAdult(key)"]',
-            function () {
+          $('[ng-repeat="(key, adult) in adults"]')
+            .find('[ng-click="removeAdult(key)"]')
+            .off("click")
+            .on("click", function () {
               removedPersonExtraBed = $(this)
                 .parent()
                 .parent()
@@ -388,13 +383,12 @@ jQuery(document).ready(function ($) {
                 );
               console.log("extrapersonsurcharges", removedPersonSurcharges);
               removeConfirmation();
-            }
-          );
+            });
 
-          parentContainer.on(
-            "click",
-            '[ng-click="removeChild(key)"]',
-            function () {
+          $('[ng-repeat="(key, child) in children"]')
+            .find('[ng-click="removeChild(key)"]')
+            .off("click")
+            .on("click", function () {
               removedPersonExtraBed = $(this)
                 .parent()
                 .parent()
@@ -409,8 +403,7 @@ jQuery(document).ready(function ($) {
                 );
               console.log("extrapersonsurcharges", removedPersonSurcharges);
               removeConfirmation();
-            }
-          );
+            });
         };
 
         // extra bed
