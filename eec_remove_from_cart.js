@@ -31,6 +31,7 @@ jQuery(document).ready(function ($) {
             travel_age_group: undefined,
             quantity: 1,
           });
+          console.log(extaBedInitial);
           if (extaBedInitial.is(":checked") == true) {
             removeFromCartItems.push({
               item_id: undefined,
@@ -76,6 +77,7 @@ jQuery(document).ready(function ($) {
             travel_age_group: undefined,
             quantity: 1,
           });
+          console.log(extaBedInitial);
           if (extaBedInitial.is(":checked") == true) {
             removeFromCartItems.push({
               item_id: undefined,
