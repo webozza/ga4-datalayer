@@ -130,10 +130,10 @@ jQuery(document).ready(function ($) {
           console.log(formStatus);
         });
 
-        $(".application-form-close").one("click", async function () {
+        $(".application-form-close").on("click", async function () {
           extraBed0 = $('[name="is_on_extra_bed"]');
           if (formStatus == true) {
-            removeFromCart();
+            await removeFromCart(); // Wait for removeFromCart to complete
             console.log(formStatus);
           } else {
             console.log(formStatus);
