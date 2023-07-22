@@ -124,6 +124,7 @@ jQuery(document).ready(function ($) {
   };
 
   let removedPersonExtraBed;
+  let removedPersonSurcharges = [];
 
   let removeAdditionalPerson = () => {
     let additionalPerson = [];
@@ -312,6 +313,17 @@ jQuery(document).ready(function ($) {
                 .parent()
                 .parent()
                 .find('[ng-model="adult.is_on_extra_bed"]');
+              removedPersonSurcharges = [];
+              removedPersonSurcharges.push(
+                $(this)
+                  .parent()
+                  .parent()
+                  .parent()
+                  .find(
+                    '[ng-click="selectPassengerExtraPayment(extra_payment, key, true)"]'
+                  )
+              );
+              console.log("extrapersonsurcharges", removedPersonSurcharges);
               removeConfirmation();
             });
 
@@ -320,6 +332,22 @@ jQuery(document).ready(function ($) {
             .find('[ng-click="removeChild(key)"]')
             .off("click")
             .on("click", function () {
+              removedPersonExtraBed = $(this)
+                .parent()
+                .parent()
+                .parent()
+                .find('[ng-model="child.is_on_extra_bed"]');
+              removedPersonSurcharges = [];
+              removedPersonSurcharges.push(
+                $(this)
+                  .parent()
+                  .parent()
+                  .parent()
+                  .find(
+                    '[ng-click="selectPassengerExtraPayment(extra_payment, key, false)"]'
+                  )
+              );
+              console.log("extrapersonsurcharges", removedPersonSurcharges);
               removeConfirmation();
             });
         };
