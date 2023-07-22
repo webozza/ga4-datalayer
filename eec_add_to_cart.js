@@ -123,10 +123,10 @@ jQuery(document).ready(function ($) {
     });
   };
 
+  let removedPerson;
+
   let removeAdditionalPerson = () => {
     let additionalPerson = [];
-
-    console.log($(this));
 
     oskarDepartures.map((entries, index) => {
       if (entries.ID == getDepartureId) {
@@ -286,6 +286,8 @@ jQuery(document).ready(function ($) {
             .find('[ng-click="removeAdult(key)"]')
             .off("click")
             .on("click", function () {
+              removedPerson = $(this);
+              console.log(removedPerson);
               removeConfirmation();
             });
 
