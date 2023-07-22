@@ -340,7 +340,9 @@ jQuery(document).ready(function ($) {
     ) {
       setTimeout(() => {
         // additional person added
-        $('[ng-click="addAdult()"], [ng-click="addChild()"]').click(
+        $(document).on(
+          "click",
+          '[ng-click="addAdult()"], [ng-click="addChild()"]',
           function () {
             additionalPerson();
             additionalPersonRemoved();
