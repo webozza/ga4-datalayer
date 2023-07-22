@@ -1,28 +1,6 @@
 jQuery(document).ready(function ($) {
   var pageHasList = $(".table--departures").length;
 
-  let extraBed = () => {
-    addPaymentInfo.push({
-      item_id: undefined,
-      item_name: "Želim bivati v sobi z dodatnim ležiščem",
-      item_brand: "Agencija Oskar",
-      item_category: "Travel",
-      item_category2: entries.country_name,
-      price: 0,
-      discount: entries.price - entries.actual_price,
-      affiliation: undefined,
-      travel_departure_date: entries.departure_start_date,
-      travel_style: entries.travel_style,
-      travel_type: undefined,
-      travel_group_size: entries.velikost_skupine,
-      travel_duration: entries.travel_duration,
-      travel_guide_id: undefined,
-      product_type: "Add-on",
-      travel_age_group: undefined,
-      quantity: 1,
-    });
-  };
-
   let departureID = "";
   $(".application-form-cta").click(function () {
     departureID = $(this).data("departure-id");
@@ -60,6 +38,28 @@ jQuery(document).ready(function ($) {
           }
         }
         let addPaymentInfo = [];
+
+        let extraBed = () => {
+          addPaymentInfo.push({
+            item_id: undefined,
+            item_name: "Želim bivati v sobi z dodatnim ležiščem",
+            item_brand: "Agencija Oskar",
+            item_category: "Travel",
+            item_category2: entries.country_name,
+            price: 0,
+            discount: entries.price - entries.actual_price,
+            affiliation: undefined,
+            travel_departure_date: entries.departure_start_date,
+            travel_style: entries.travel_style,
+            travel_type: undefined,
+            travel_group_size: entries.velikost_skupine,
+            travel_duration: entries.travel_duration,
+            travel_guide_id: undefined,
+            product_type: "Add-on",
+            travel_age_group: undefined,
+            quantity: 1,
+          });
+        };
 
         // handle initial extra bed
         let extraBedInitial = $('[name="is_on_extra_bed"]');
