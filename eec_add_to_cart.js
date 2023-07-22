@@ -172,6 +172,8 @@ jQuery(document).ready(function ($) {
           });
         }
         removedPersonSurcharges.map((entries) => {
+          let extraData = JSON.parse(entries.val());
+          let extraPaymentPrice = extraData.extra_payment_price;
           console.log(entries);
           if (entries.is(":checked") == true) {
             additionalPerson.push({
@@ -180,7 +182,7 @@ jQuery(document).ready(function ($) {
               item_brand: "Agencija Oskar",
               item_category: "Travel",
               item_category2: entries.country_name,
-              price: addOnPrice,
+              price: extraPaymentPrice,
               discount: entries.price - entries.actual_price,
               affiliation: undefined,
               travel_departure_date: entries.departure_start_date,
@@ -348,9 +350,6 @@ jQuery(document).ready(function ($) {
                   )
               );
               console.log("extrapersonsurcharges", removedPersonSurcharges);
-              removedPersonSurcharges.map((entries) => {
-                console.log(entries.val().extra_payment_price);
-              });
               removeConfirmation();
             });
 
