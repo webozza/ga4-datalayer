@@ -52,7 +52,7 @@ jQuery(document).ready(function ($) {
           let extraPaymentPrice;
           if (extraData.extra_payment_price == "") {
             extraPaymentPrice = (
-              Number(entries.actual_price) *
+              Number(cartSinglePrice) *
               Number(extraData.extra_payment_percentage)
             ).toFixed(2);
           } else {
