@@ -158,7 +158,11 @@ jQuery(document).ready(function ($) {
   let removeAdditionalPerson = () => {
     let additionalPerson = [];
 
-    oskarDepartures.map((entries, index) => {
+    const selectedOskarDepartures = $("body").hasClass("single-potovanja")
+      ? oskarDepartures2
+      : oskarDepartures;
+
+    selectedOskarDepartures.map((entries, index) => {
       if (entries.ID == getDepartureId) {
         additionalPerson.push({
           item_id: entries.product_id,
