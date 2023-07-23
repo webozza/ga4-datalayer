@@ -42,9 +42,13 @@ jQuery(document).ready(function ($) {
     $('[ng-click="saveApplicationForm()"]').mouseover(async function () {
       allExtraBeds = [];
       allExtraPayments = [];
+
+      const promises = [];
+
+      // Processing for extra payments
       $(
         '[ng-click="selectExtraPaymentForApplicationHolder(extra_payment)"], [ng-click="selectPassengerExtraPayment(extra_payment, key, true)"], [ng-click="selectPassengerExtraPayment(extra_payment, key, false)"]'
-      ).each(async function () {
+      ).each(function () {
         let thisExtraPayment = $(this);
         if (thisExtraPayment.is(":checked") == true) {
           let surchargeValue = thisExtraPayment.val();
@@ -64,7 +68,7 @@ jQuery(document).ready(function ($) {
             ? oskarDepartures2
             : oskarDepartures;
 
-          selectedOskarDepartures.map(async (entries) => {
+          const promise = selectedOskarDepartures.map(async (entries) => {
             if (entries.ID == purchaseDepartureID) {
               departureStartDate = entries.departure_start_date;
               cartSinglePrice = entries.actual_price;
@@ -94,18 +98,21 @@ jQuery(document).ready(function ($) {
               });
             }
           });
+
+          promises.push(promise);
         }
       });
 
+      // Processing for extra beds
       $(
         '[ng-model="applicationFormHolder.is_on_extra_bed"],[ng-model="adult.is_on_extra_bed"],[ng-model="child.is_on_extra_bed"]'
-      ).each(async function () {
+      ).each(function () {
         if ($(this).is(":checked") == true) {
           const selectedOskarDepartures = $("body").hasClass("single-potovanja")
             ? oskarDepartures2
             : oskarDepartures;
 
-          selectedOskarDepartures.map(async (entries) => {
+          const promise = selectedOskarDepartures.map(async (entries) => {
             if (entries.ID == purchaseDepartureID) {
               departureStartDate = entries.departure_start_date;
               cartSinglePrice = entries.actual_price;
@@ -135,10 +142,17 @@ jQuery(document).ready(function ($) {
               });
             }
           });
+
+          promises.push(promise);
         }
       });
 
-      console.log([...allExtraPayments, ...allExtraBeds]);
+      // Wait for all promises to resolve before moving forward
+      await Promise.all(promises);
+
+      // Now, allExtraPayments and allExtraBeds arrays will be fully populated.
+      console.log(allExtraPayments);
+      console.log(allExtraBeds);
     });
   };
 
