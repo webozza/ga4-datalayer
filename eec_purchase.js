@@ -52,6 +52,17 @@ jQuery(document).ready(function ($) {
       var formData = new URLSearchParams(settings.data);
       let newFormData = Object.fromEntries(formData);
 
+      // Getting the extra payments
+      const extraPaymentsArray = [];
+      newFormData.application_form.passengers.forEach((passenger) => {
+        if (passenger.all_extra_payments) {
+          passenger.all_extra_payments.forEach((extraPayment) => {
+            extraPaymentsArray.push(extraPayment);
+          });
+        }
+      });
+      console.log("extrapaymentarray", extraPaymentsArray);
+
       console.log("new form data", newFormData);
       cartQuantity = newFormData["application_form[passengers_number]"];
       currentPriceListId =
