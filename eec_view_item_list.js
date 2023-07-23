@@ -73,9 +73,9 @@ jQuery(document).ready(function ($) {
         });
       }
     });
-    return banners;
   };
   bannersList();
+  console.log("banners", banners);
 
   let productListView = () => {
     // PREPARE THE VARIABLES
@@ -104,6 +104,7 @@ jQuery(document).ready(function ($) {
               product_type: "Main",
               travel_age_group: undefined,
               item_list_name: `${entries.travel_name}: Departures Table`,
+              index: index + 1,
             });
           }
         } else {
