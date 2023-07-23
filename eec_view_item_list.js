@@ -58,7 +58,7 @@ jQuery(document).ready(function ($) {
         if (isCountryTemplate > 0) {
           if (idsUnderCountry.includes(parseInt(entries.ID))) {
             // Convert entries.ID to number for comparison
-            newProductListing.push({
+            productListing.push({
               item_id: entries.product_id,
               item_name: entries.travel_name,
               item_brand: "Agencija Oskar",
