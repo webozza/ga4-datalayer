@@ -61,7 +61,7 @@ jQuery(document).ready(function ($) {
   let filters;
   let formattedFilters;
 
-  if (curLoc.indexOf("?dezela") > -1) {
+  if (curLoc.indexOf("?") > -1) {
     filters = convertStringToObject(window.location.search);
     formattedFilters = convertObjectToString(filters);
     console.log(formattedFilters);
@@ -139,7 +139,7 @@ jQuery(document).ready(function ($) {
     let productListing = [];
     let newProductListing = [];
 
-    if (curLoc.indexOf("?dezela") > -1) {
+    if (curLoc.indexOf("?") > -1) {
       let filteredDepartureIds = [];
 
       $(".cr_row_active_all, .cr_row_active").each(function () {
