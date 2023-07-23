@@ -40,6 +40,7 @@ jQuery(document).ready(function ($) {
     };
 
     $('[ng-click="saveApplicationForm()"]').mouseover(async function () {
+      allExtraBeds = [];
       allExtraPayments = [];
       $(
         '[ng-click="selectExtraPaymentForApplicationHolder(extra_payment)"], [ng-click="selectPassengerExtraPayment(extra_payment, key, true)"], [ng-click="selectPassengerExtraPayment(extra_payment, key, false)"]'
@@ -99,7 +100,6 @@ jQuery(document).ready(function ($) {
       $(
         '[ng-model="applicationFormHolder.is_on_extra_bed"],[ng-model="adult.is_on_extra_bed"],[ng-model="child.is_on_extra_bed"]'
       ).each(async function () {
-        allExtraBeds = [];
         if ($(this).is(":checked") == true) {
           const selectedOskarDepartures = $("body").hasClass("single-potovanja")
             ? oskarDepartures2
