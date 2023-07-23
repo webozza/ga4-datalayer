@@ -47,11 +47,11 @@ jQuery(document).ready(function ($) {
     });
     return banners;
   };
+  bannersList();
 
   let productListView = () => {
     // PREPARE THE VARIABLES
-    let productListing = [];
-    let newProductListing = [];
+    let productListing = banners;
 
     if ($("body").hasClass("single-potovanja")) {
       oskarDepartures2.map((entries, index) => {
