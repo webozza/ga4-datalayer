@@ -62,7 +62,9 @@ jQuery(document).ready(function ($) {
       // PREPARE THE VARIABLES
       let getID = $(this).data("travel-id");
       let bannerIndex = $(this).parent().index();
-      let bannerFilter = $("#potovanja .filter a.active").text();
+      let bannerFilter = $("#potovanja .filter a.active")
+        .text()
+        .replace(/\n\s+/g, " ");
 
       if ($("body").hasClass("single-potovanja")) {
         let hold2 = [];
