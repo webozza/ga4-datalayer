@@ -470,27 +470,38 @@ jQuery(document).ready(function ($) {
             "change",
             '[name="extra_payments[]"], [ng-repeat="extra_payment in departure.extraPayments"] :checkbox',
             async function () {
-              let rawValue = $(this).parent().find("span").text();
-              let addOnPrice;
-              addOnName = $(this).parent().text().replace(/\s+/g, " ").trim();
+              // let rawValue = $(this).parent().find("span").text();
+              // let addOnPrice;
+              // addOnName = $(this).parent().text().replace(/\s+/g, " ").trim();
 
-              if (rawValue.indexOf("%") > -1) {
-                cancellationPercentage = rawValue
-                  .replace("%", "")
-                  .replace(/\s/g, "");
-                addOnPrice = Number(
-                  singleItemPrice * (cancellationPercentage / 100)
+              // if (rawValue.indexOf("%") > -1) {
+              //   cancellationPercentage = rawValue
+              //     .replace("%", "")
+              //     .replace(/\s/g, "");
+              //   addOnPrice = Number(
+              //     singleItemPrice * (cancellationPercentage / 100)
+              //   ).toFixed(2);
+              // } else {
+              //   addOnPrice = rawValue.replace("€", "").replace(/\s/g, "");
+              // }
+              let surchargeCheckbox = $(this);
+              let surchargeValue = surchargeCheckbox.val();
+              let extraData = JSON.parse(surchargeValue);
+              let extraPaymentName = extraData.extra_payment_name;
+              let extraPaymentPrice;
+              if (extraData.extra_payment_price == "") {
+                extraPaymentPrice = (
+                  Number(entries.actual_price) *
+                  Number(extraData.extra_payment_percentage)
                 ).toFixed(2);
               } else {
-                addOnPrice = rawValue.replace("€", "").replace(/\s/g, "");
+                extraPaymentPrice = extraData.extra_payment_price;
               }
 
               if ($(this)[0].checked) {
-                //console.log("added", addOnPrice);
-                addOn(addOnPrice);
+                addOn(extraPaymentPrice);
               } else {
-                //console.log("removed", addOnPrice);
-                removeAddOn(addOnPrice);
+                removeAddOn(extraPaymentPrice);
               }
             }
           );
