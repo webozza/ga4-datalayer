@@ -54,9 +54,18 @@ jQuery(document).ready(function ($) {
 
       console.log("new form data", newFormData);
 
+      // Decoding the property names
+      const decodedFormData = {};
+      for (const [key, value] of Object.entries(newFormData)) {
+        const decodedKey = decodeURIComponent(key);
+        decodedFormData[decodedKey] = value;
+      }
+
+      console.log("decodedFormData", decodedFormData);
+
       // Convert passengers object to an array
       const passengersArray = Object.values(
-        newFormData.application_form.passengers
+        decodedFormData["application_form[passengers]"]
       );
 
       // Getting the extra payments
