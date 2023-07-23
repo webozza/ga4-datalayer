@@ -25,6 +25,91 @@ jQuery(document).ready(function ($) {
   let year = today.getFullYear();
   let dateToday = `${year}${month}${day}`;
 
+  // for extrapayments
+  let extra_item_category2;
+  let extra_price;
+  let extra_discount;
+  let extra_travel_departure_date;
+  let extra_travel_style;
+  let extra_travel_group_size;
+  let extra_travel_duration;
+  let extra_travel_guide_id;
+
+  let allExtraPayments = [];
+  let allExtraBeds = [];
+
+  let getExtraPayments = () => {
+    $('[ng-click="saveApplicationForm()"]').mouseover(async function () {
+      allExtraPayments = [];
+      $(
+        '[ng-click="selectExtraPaymentForApplicationHolder(extra_payment)"], [ng-click="selectPassengerExtraPayment(extra_payment, key, true)"], [ng-click="selectPassengerExtraPayment(extra_payment, key, false)"]'
+      ).each(async function () {
+        let thisExtraPayment = $(this);
+        if (thisExtraPayment.is(":checked") == true) {
+          let surchargeValue = thisExtraPayment.val();
+          let extraData = JSON.parse(surchargeValue);
+          let extraPaymentName = extraData.extra_payment_name;
+          let extraPaymentPrice;
+          if (extraData.extra_payment_price == "") {
+            extraPaymentPrice = (
+              Number(entries.actual_price) *
+              Number(extraData.extra_payment_percentage)
+            ).toFixed(2);
+          } else {
+            extraPaymentPrice = extraData.extra_payment_price;
+          }
+
+          allExtraPayments.push({
+            item_id: undefined,
+            item_name: extraPaymentName,
+            item_brand: "Agencija Oskar",
+            item_category: "Travel",
+            item_category2: extra_item_category2,
+            price: extraPaymentPrice,
+            discount: extra_discount,
+            affiliation: undefined,
+            travel_departure_date: extra_travel_departure_date,
+            travel_style: extra_travel_style,
+            travel_type: undefined,
+            travel_group_size: extra_travel_group_size,
+            travel_duration: extra_travel_duration,
+            travel_guide_id: undefined,
+            product_type: "Add-on",
+            travel_age_group: undefined,
+            quantity: 1,
+          });
+        }
+      });
+
+      $(
+        '[ng-model="applicationFormHolder.is_on_extra_bed"],[ng-model="adult.is_on_extra_bed"],[ng-model="child.is_on_extra_bed"]'
+      ).each(async function () {
+        allExtraBeds = [];
+        if ($(this).is(":checked") == true) {
+          allExtraBeds.push({
+            item_id: undefined,
+            item_name: "Želim bivati v sobi z dodatnim ležiščem",
+            item_brand: "Agencija Oskar",
+            item_category: "Travel",
+            item_category2: extra_item_category2,
+            price: 0,
+            discount: extra_discount,
+            affiliation: undefined,
+            travel_departure_date: extra_travel_departure_date,
+            travel_style: extra_travel_style,
+            travel_type: undefined,
+            travel_group_size: extra_travel_group_size,
+            travel_duration: extra_travel_duration,
+            travel_guide_id: undefined,
+            product_type: "Add-on",
+            travel_age_group: undefined,
+            quantity: 1,
+          });
+        }
+      });
+    });
+  };
+
   // form open
   $(document).ajaxComplete(function (event, xhr, settings) {
     if (
@@ -38,6 +123,7 @@ jQuery(document).ready(function ($) {
             console.log(methodOfPayment);
           }
         );
+        getExtraPayments();
       }, 2000);
     }
   });
@@ -53,31 +139,6 @@ jQuery(document).ready(function ($) {
       let newFormData = Object.fromEntries(formData);
 
       console.log("new form data", newFormData);
-
-      // Decoding the property names
-      const decodedFormData = {};
-      for (const [key, value] of Object.entries(newFormData)) {
-        const decodedKey = decodeURIComponent(key);
-        decodedFormData[decodedKey] = value;
-      }
-
-      console.log("decodedFormData", decodedFormData);
-
-      // Convert passengers object to an array
-      const passengersArray = Object.values(
-        decodedFormData["application_form[passengers]"]
-      );
-
-      // Getting the extra payments
-      const extraPaymentsArray = [];
-      passengersArray.forEach((passenger) => {
-        if (passenger.all_extra_payments) {
-          passenger.all_extra_payments.forEach((extraPayment) => {
-            extraPaymentsArray.push(extraPayment);
-          });
-        }
-      });
-      console.log("extrapaymentarray", extraPaymentsArray);
 
       cartQuantity = newFormData["application_form[passengers_number]"];
       currentPriceListId =
@@ -137,6 +198,15 @@ jQuery(document).ready(function ($) {
 
         await renderPotovanja(travelId);
 
+        extra_item_category2 = entries.country_name;
+        extra_price = entries.actual_price;
+        extra_discount = entries.price - entries.actual_price;
+        extra_travel_departure_date = entries.departure_start_date;
+        extra_travel_style = entries.travel_style;
+        extra_travel_group_size = entries.velikost_skupine;
+        extra_travel_duration = entries.travel_duration;
+        extra_travel_guide_id = travelGuideId;
+
         itemData.push({
           item_id: entries.product_id,
           item_name: entries.travel_name,
@@ -182,7 +252,7 @@ jQuery(document).ready(function ($) {
         shipping: undefined,
         coupon: undefined,
         affiliation: undefined,
-        items: itemData,
+        items: [...itemData, ...allExtraPayments, ...allExtraBeds],
       },
     });
   };
