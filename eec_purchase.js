@@ -40,9 +40,6 @@ jQuery(document).ready(function ($) {
     };
 
     $('[ng-click="saveApplicationForm()"]').mouseover(async function () {
-      allExtraBeds = [];
-      allExtraPayments = [];
-
       const promises = [];
 
       // Processing for extra payments
@@ -76,6 +73,7 @@ jQuery(document).ready(function ($) {
 
               await renderPotovanja(travelId);
 
+              allExtraPayments = [];
               allExtraPayments.push({
                 item_id: undefined,
                 item_name: extraPaymentName,
@@ -120,6 +118,7 @@ jQuery(document).ready(function ($) {
 
               await renderPotovanja(travelId);
 
+              allExtraPayments = [];
               allExtraBeds.push({
                 item_id: undefined,
                 item_name: "Želim bivati v sobi z dodatnim ležiščem",
