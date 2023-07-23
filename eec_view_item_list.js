@@ -73,7 +73,9 @@ jQuery(document).ready(function ($) {
       let thisBanner = $(this);
       let bannerId = thisBanner.data("travel-id");
       let bannerIndex = thisBanner.parent().index();
-      let bannerFilter = $("#potovanja .filter a.active").text();
+      let bannerFilter = $("#potovanja .filter a.active")
+        .text()
+        .replace(/\n\s+/g, " ");
       let foundMatchingEntry = false;
 
       if ($("body").hasClass("single-potovanja")) {
