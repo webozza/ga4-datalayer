@@ -127,11 +127,9 @@ jQuery(document).ready(function ($) {
   async function triggerPurchaseEvent() {
     let itemData = [];
     let departureStartDate;
-    let travelGuideId;
-    totalPurchaseValue = $(".application-form .price")
-      .eq(0)
-      .text()
-      .replace("€", "");
+    let totalPurchaseValue;
+    let transactionValue;
+    const dateToday = getDateToday(); // Function to get current date
 
     // Extract other required data (cartSinglePrice, travelId)
     const selectedOskarDepartures = $("body").hasClass("single-potovanja")
