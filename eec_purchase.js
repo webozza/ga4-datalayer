@@ -137,6 +137,8 @@ jQuery(document).ready(function ($) {
           });
         }
       });
+
+      console.log([...allExtraPayments, ...allExtraBeds]);
     });
   };
 
