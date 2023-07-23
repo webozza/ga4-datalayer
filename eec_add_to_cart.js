@@ -14,6 +14,7 @@ jQuery(document).ready(function ($) {
       if ($("body").hasClass("single-potovanja")) {
         oskarDepartures2.map((entries, index) => {
           if (entries.ID == departureID) {
+            singleItemPrice = entries.actual_price;
             addToCartItems.push({
               item_id: entries.product_id,
               item_name: entries.travel_name,
@@ -491,7 +492,7 @@ jQuery(document).ready(function ($) {
               let extraPaymentPrice;
               if (extraData.extra_payment_price == "") {
                 extraPaymentPrice = (
-                  Number(entries.actual_price) *
+                  Number(singleItemPrice) *
                   Number(extraData.extra_payment_percentage)
                 ).toFixed(2);
               } else {
