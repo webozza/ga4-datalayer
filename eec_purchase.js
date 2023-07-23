@@ -38,7 +38,7 @@ jQuery(document).ready(function ($) {
   let allExtraPayments = [];
   let allExtraBeds = [];
 
-  let getExtraPayments = () => {
+  let getExtraPayments = async () => {
     $('[ng-click="saveApplicationForm()"]').mouseover(async function () {
       allExtraPayments = [];
       $(
@@ -123,13 +123,12 @@ jQuery(document).ready(function ($) {
             console.log(methodOfPayment);
           }
         );
-        getExtraPayments();
       }, 2000);
     }
   });
 
   // trigger purchase event
-  $(document).ajaxComplete(function (event, xhr, settings) {
+  $(document).ajaxComplete(async function (event, xhr, settings) {
     if (
       settings.url === ajaxurl &&
       settings.data.indexOf("action=save_application_form") > -1
@@ -162,6 +161,7 @@ jQuery(document).ready(function ($) {
       if (payOnline == "false") {
         paymentMethod = "Invoice";
         console.log("Purchase event triggered by @datio-it");
+        await getExtraPayments();
         triggerPurchaseEvent();
       }
     }
