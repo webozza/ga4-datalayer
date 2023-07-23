@@ -135,8 +135,7 @@ jQuery(document).ready(function ($) {
   let productListView = () => {
     // PREPARE THE VARIABLES
     let productListing = [];
-    //let newProductListing = [];
-    let newProductListing = banners;
+    let newProductListing = [];
 
     if (curLoc.indexOf("?dezela") > -1) {
       let filteredDepartureIds = [];
@@ -372,7 +371,7 @@ jQuery(document).ready(function ($) {
       },
       ecommerce: {
         currency: "EUR",
-        items: newProductListing,
+        items: [...banners, ...newProductListing],
       },
     });
   };
