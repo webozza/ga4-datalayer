@@ -39,6 +39,16 @@ jQuery(document).ready(function ($) {
   let allExtraBeds = [];
 
   let getExtraPayments = async () => {
+    let fetchPotovanja = async (travel_id) => {
+      const url = `/wp-json/wp/v2/potovanja/${travel_id}`;
+      let res = await fetch(url);
+      return await res.json();
+    };
+    let renderPotovanja = async (travel_id) => {
+      let response = await fetchPotovanja(travel_id);
+      travelGuideId = response.acf.travel_guid;
+    };
+
     $('[ng-click="saveApplicationForm()"]').mouseover(async function () {
       allExtraPayments = [];
       $(
