@@ -26,14 +26,14 @@ jQuery(document).ready(function ($) {
   let dateToday = `${year}${month}${day}`;
 
   // for extrapayments
-  let extra_item_category2;
-  let extra_price;
-  let extra_discount;
-  let extra_travel_departure_date;
-  let extra_travel_style;
-  let extra_travel_group_size;
-  let extra_travel_duration;
-  let extra_travel_guide_id;
+  // let extra_item_category2;
+  // let extra_price;
+  // let extra_discount;
+  // let extra_travel_departure_date;
+  // let extra_travel_style;
+  // let extra_travel_group_size;
+  // let extra_travel_duration;
+  // let extra_travel_guide_id;
 
   let allExtraPayments = [];
   let allExtraBeds = [];
@@ -60,22 +60,11 @@ jQuery(document).ready(function ($) {
           }
 
           allExtraPayments.push({
-            item_id: undefined,
             item_name: extraPaymentName,
             item_brand: "Agencija Oskar",
             item_category: "Travel",
-            item_category2: extra_item_category2,
             price: extraPaymentPrice,
-            discount: extra_discount,
-            affiliation: undefined,
-            travel_departure_date: extra_travel_departure_date,
-            travel_style: extra_travel_style,
-            travel_type: undefined,
-            travel_group_size: extra_travel_group_size,
-            travel_duration: extra_travel_duration,
-            travel_guide_id: undefined,
             product_type: "Add-on",
-            travel_age_group: undefined,
             quantity: 1,
           });
         }
@@ -123,6 +112,7 @@ jQuery(document).ready(function ($) {
             console.log(methodOfPayment);
           }
         );
+        getExtraPayments();
       }, 2000);
     }
   });
@@ -161,7 +151,6 @@ jQuery(document).ready(function ($) {
       if (payOnline == "false") {
         paymentMethod = "Invoice";
         console.log("Purchase event triggered by @datio-it");
-        await getExtraPayments();
         triggerPurchaseEvent();
       }
     }
@@ -198,14 +187,14 @@ jQuery(document).ready(function ($) {
 
         await renderPotovanja(travelId);
 
-        extra_item_category2 = entries.country_name;
-        extra_price = entries.actual_price;
-        extra_discount = entries.price - entries.actual_price;
-        extra_travel_departure_date = entries.departure_start_date;
-        extra_travel_style = entries.travel_style;
-        extra_travel_group_size = entries.velikost_skupine;
-        extra_travel_duration = entries.travel_duration;
-        extra_travel_guide_id = travelGuideId;
+        // extra_item_category2 = entries.country_name;
+        // extra_price = entries.actual_price;
+        // extra_discount = entries.price - entries.actual_price;
+        // extra_travel_departure_date = entries.departure_start_date;
+        // extra_travel_style = entries.travel_style;
+        // extra_travel_group_size = entries.velikost_skupine;
+        // extra_travel_duration = entries.travel_duration;
+        // extra_travel_guide_id = travelGuideId;
 
         itemData.push({
           item_id: entries.product_id,
