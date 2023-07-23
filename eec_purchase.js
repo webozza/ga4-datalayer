@@ -129,7 +129,11 @@ jQuery(document).ready(function ($) {
     let departureStartDate;
     let totalPurchaseValue;
     let transactionValue;
-    const dateToday = getDateToday(); // Function to get current date
+    const today = new Date();
+    const day = today.getDate().toString().padStart(2, "0");
+    const month = (today.getMonth() + 1).toString().padStart(2, "0");
+    const year = today.getFullYear();
+    const dateToday = `${year}${month}${day}`;
 
     // Extract other required data (cartSinglePrice, travelId)
     const selectedOskarDepartures = $("body").hasClass("single-potovanja")
