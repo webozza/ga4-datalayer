@@ -104,7 +104,7 @@ jQuery(document).ready(function ($) {
                   travel_guide_id: undefined,
                   product_type: "Main",
                   travel_age_group: undefined,
-                  item_list_name: `${entries.travel_name}: Departures Table | ${formattedFilters}`,
+                  item_list_name: `Departures Table: ${formattedFilters}`,
                   //index: index + 1,
                 });
               }
@@ -128,7 +128,7 @@ jQuery(document).ready(function ($) {
                 travel_guide_id: undefined,
                 product_type: "Main",
                 travel_age_group: undefined,
-                item_list_name: `${entries.travel_name}: Departures Table | ${formattedFilters}`,
+                item_list_name: `Departures Table: ${formattedFilters}`,
                 //index: index + 1,
               });
             }
@@ -157,7 +157,7 @@ jQuery(document).ready(function ($) {
                   travel_guide_id: undefined,
                   product_type: "Main",
                   travel_age_group: undefined,
-                  item_list_name: `${entries.travel_name}: Departures Table | ${formattedFilters}`,
+                  item_list_name: `Departures Table: ${formattedFilters}`,
                   //index: index + 1,
                 });
               }
@@ -181,7 +181,7 @@ jQuery(document).ready(function ($) {
                 travel_guide_id: undefined,
                 product_type: "Main",
                 travel_age_group: undefined,
-                item_list_name: `${entries.travel_name}: Departures Table | ${formattedFilters}`,
+                item_list_name: `Departures Table: ${formattedFilters}`,
                 //index: index + 1,
               });
             }
@@ -215,7 +215,7 @@ jQuery(document).ready(function ($) {
                 travel_guide_id: undefined,
                 product_type: "Main",
                 travel_age_group: undefined,
-                item_list_name: `${entries.travel_name}: Departures Table'`,
+                item_list_name: "Departures Table",
                 //index: index + 1,
               });
             }
@@ -237,7 +237,7 @@ jQuery(document).ready(function ($) {
               travel_guide_id: undefined,
               product_type: "Main",
               travel_age_group: undefined,
-              item_list_name: `${entries.travel_name}: Departures Table'`,
+              item_list_name: "Departures Table",
               //index: index + 1,
             });
           }
@@ -264,7 +264,7 @@ jQuery(document).ready(function ($) {
                 travel_guide_id: undefined,
                 product_type: "Main",
                 travel_age_group: undefined,
-                item_list_name: `${entries.travel_name}: Departures Table'`,
+                item_list_name: "Departures Table",
                 //index: index + 1,
               });
             }
@@ -286,7 +286,7 @@ jQuery(document).ready(function ($) {
               travel_guide_id: undefined,
               product_type: "Main",
               travel_age_group: undefined,
-              item_list_name: `${entries.travel_name}: Departures Table'`,
+              item_list_name: "Departures Table",
               //index: index + 1,
             });
           }
