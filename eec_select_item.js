@@ -36,7 +36,7 @@ jQuery(document).ready(function ($) {
         }
       });
 
-      // PUSH TO GA4
+      // PUSH TO GA4 ...
       window.dataLayer.push({ event_params: null, ecommerce: null });
 
       window.dataLayer.push({
