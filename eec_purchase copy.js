@@ -1,4 +1,28 @@
 jQuery(document).ready(function ($) {
+  function generateTransactionID() {
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const date = new Date();
+    const year = date.getFullYear().toString().slice(-2);
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = String(date.getSeconds()).padStart(2, "0");
+    const randomChars = [];
+
+    // Generate a random part
+    for (let i = 0; i < 10; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      randomChars.push(characters[randomIndex]);
+    }
+
+    const transactionID = `${year}${month}${day}-${randomChars.join(
+      ""
+    )}-${hours}${minutes}${seconds}`;
+    return transactionID;
+  }
+
   var pageHasList = $(".table--departures").length;
 
   // prepare departure id
@@ -17,6 +41,7 @@ jQuery(document).ready(function ($) {
   let currentPriceListId;
   let travelId;
   let totalPurchaseValue;
+  let transactionId;
 
   // get current date
   let today = new Date();
@@ -24,6 +49,136 @@ jQuery(document).ready(function ($) {
   let month = (today.getMonth() + 1).toString().padStart(2, "0");
   let year = today.getFullYear();
   let dateToday = `${year}${month}${day}`;
+
+  let allExtraPayments = [];
+  let allExtraBeds = [];
+
+  let getExtraPayments = async () => {
+    let fetchPotovanja = async (travel_id) => {
+      const url = `/wp-json/wp/v2/potovanja/${travel_id}`;
+      let res = await fetch(url);
+      return await res.json();
+    };
+    let renderPotovanja = async (travel_id) => {
+      let response = await fetchPotovanja(travel_id);
+      travelGuideId = response.acf.travel_guid;
+    };
+
+    $('[ng-click="saveApplicationForm()"]').mouseover(async function () {
+      const promises = [];
+
+      // Processing for extra payments
+      $(
+        '[ng-click="selectExtraPaymentForApplicationHolder(extra_payment)"], [ng-click="selectPassengerExtraPayment(extra_payment, key, true)"], [ng-click="selectPassengerExtraPayment(extra_payment, key, false)"]'
+      ).each(function () {
+        let thisExtraPayment = $(this);
+        if (thisExtraPayment.is(":checked") == true) {
+          let surchargeValue = thisExtraPayment.val();
+          let extraData = JSON.parse(surchargeValue);
+          let extraPaymentName = extraData.extra_payment_name;
+          let extraPaymentPrice;
+          if (extraData.extra_payment_price == "") {
+            extraPaymentPrice = (
+              Number(cartSinglePrice) *
+              Number(extraData.extra_payment_percentage)
+            ).toFixed(2);
+          } else {
+            extraPaymentPrice = extraData.extra_payment_price;
+          }
+
+          const selectedOskarDepartures = $("body").hasClass("single-potovanja")
+            ? oskarDepartures2
+            : oskarDepartures;
+
+          const promise = selectedOskarDepartures.map(async (entries) => {
+            if (entries.ID == purchaseDepartureID) {
+              departureStartDate = entries.departure_start_date;
+              cartSinglePrice = entries.actual_price;
+              travelId = entries.travel_id;
+
+              await renderPotovanja(travelId);
+
+              allExtraPayments = [];
+              allExtraPayments.push({
+                item_id: undefined,
+                item_name: extraPaymentName,
+                item_brand: "Agencija Oskar",
+                item_category: "Travel",
+                item_category2: entries.country_name,
+                price: extraPaymentPrice,
+                discount: 0,
+                affiliation: undefined,
+                travel_departure_date: entries.departure_start_date,
+                travel_style: entries.travel_style,
+                travel_type: undefined,
+                travel_group_size: entries.velikost_skupine,
+                travel_duration: entries.travel_duration,
+                travel_guide_id: travelGuideId,
+                product_type: "Add-on",
+                travel_age_group: undefined,
+                quantity: 1,
+                coupon: undefined,
+              });
+            }
+          });
+
+          promises.push(promise);
+        }
+      });
+
+      // Processing for extra beds
+      $(
+        '[ng-model="applicationFormHolder.is_on_extra_bed"],[ng-model="adult.is_on_extra_bed"],[ng-model="child.is_on_extra_bed"]'
+      ).each(function () {
+        if ($(this).is(":checked") == true) {
+          const selectedOskarDepartures = $("body").hasClass("single-potovanja")
+            ? oskarDepartures2
+            : oskarDepartures;
+
+          const promise = selectedOskarDepartures.map(async (entries) => {
+            if (entries.ID == purchaseDepartureID) {
+              departureStartDate = entries.departure_start_date;
+              cartSinglePrice = entries.actual_price;
+              travelId = entries.travel_id;
+
+              await renderPotovanja(travelId);
+
+              allExtraPayments = [];
+              allExtraBeds.push({
+                item_id: undefined,
+                item_name: "Želim bivati v sobi z dodatnim ležiščem",
+                item_brand: "Agencija Oskar",
+                item_category: "Travel",
+                item_category2: entries.country_name,
+                price: 0,
+                discount: 0,
+                affiliation: undefined,
+                travel_departure_date: entries.departure_start_date,
+                travel_style: entries.travel_style,
+                travel_type: undefined,
+                travel_group_size: entries.velikost_skupine,
+                travel_duration: entries.travel_duration,
+                travel_guide_id: travelGuideId,
+                product_type: "Add-on",
+                travel_age_group: undefined,
+                quantity: 1,
+                coupon: undefined,
+              });
+            }
+          });
+
+          promises.push(promise);
+        }
+      });
+
+      // Wait for all promises to resolve before moving forward
+      await Promise.all(promises);
+
+      // Now, allExtraPayments and allExtraBeds arrays will be fully populated.
+      console.log(allExtraPayments);
+      console.log(allExtraBeds);
+    });
+  };
 
   // form open
   $(document).ajaxComplete(function (event, xhr, settings) {
@@ -38,12 +193,13 @@ jQuery(document).ready(function ($) {
             console.log(methodOfPayment);
           }
         );
+        getExtraPayments();
       }, 2000);
     }
   });
 
   // trigger purchase event
-  $(document).ajaxComplete(function (event, xhr, settings) {
+  $(document).ajaxComplete(async function (event, xhr, settings) {
     if (
       settings.url === ajaxurl &&
       settings.data.indexOf("action=save_application_form") > -1
@@ -53,9 +209,11 @@ jQuery(document).ready(function ($) {
       let newFormData = Object.fromEntries(formData);
 
       console.log("new form data", newFormData);
+
       cartQuantity = newFormData["application_form[passengers_number]"];
       currentPriceListId =
         newFormData["application_form[price_list][current_price_list_id]"];
+      transactionId = generateTransactionID();
 
       let payOnline = newFormData["application_form[pay_online]"];
       let formApplicationType =
@@ -75,7 +233,7 @@ jQuery(document).ready(function ($) {
       if (payOnline == "false") {
         paymentMethod = "Invoice";
         console.log("Purchase event triggered by @datio-it");
-        triggerPurchaseEvent();
+        await triggerPurchaseEvent();
       }
     }
   });
@@ -99,38 +257,44 @@ jQuery(document).ready(function ($) {
       travelGuideId = response.acf.travel_guid;
     };
 
-    oskarDepartures.map(async (entries) => {
-      if (entries.ID == purchaseDepartureID) {
-        departureStartDate = entries.departure_start_date;
-        cartSinglePrice = entries.actual_price;
-        travelId = entries.travel_id;
+    const selectedOskarDepartures = $("body").hasClass("single-potovanja")
+      ? oskarDepartures2
+      : oskarDepartures;
 
-        await renderPotovanja(travelId);
+    await Promise.all(
+      selectedOskarDepartures.map(async (entries) => {
+        if (entries.ID == purchaseDepartureID) {
+          departureStartDate = entries.departure_start_date;
+          cartSinglePrice = entries.actual_price;
+          travelId = entries.travel_id;
 
-        itemData.push({
-          item_id: entries.product_id,
-          item_name: entries.travel_name,
-          item_brand: "Agencija Oskar",
-          item_category: "Travel",
-          item_category2: entries.country_name,
-          price: entries.actual_price,
-          discount: entries.price - entries.actual_price,
-          affiliation: undefined,
-          travel_departure_date: entries.departure_start_date,
-          travel_style: entries.travel_style,
-          travel_type: undefined,
-          travel_group_size: entries.velikost_skupine,
-          travel_duration: entries.travel_duration,
-          travel_guide_id: travelGuideId,
-          product_type: "Main",
-          travel_age_group: undefined,
-          quantity: cartQuantity,
-          coupon: undefined,
-        });
+          await renderPotovanja(travelId);
 
-        transactionValue = entries.price;
-      }
-    });
+          itemData.push({
+            item_id: entries.product_id,
+            item_name: entries.travel_name,
+            item_brand: "Agencija Oskar",
+            item_category: "Travel",
+            item_category2: entries.country_name,
+            price: entries.actual_price,
+            discount: entries.price - entries.actual_price,
+            affiliation: undefined,
+            travel_departure_date: entries.departure_start_date,
+            travel_style: entries.travel_style,
+            travel_type: undefined,
+            travel_group_size: entries.velikost_skupine,
+            travel_duration: entries.travel_duration,
+            travel_guide_id: travelGuideId,
+            product_type: "Main",
+            travel_age_group: undefined,
+            quantity: cartQuantity,
+            coupon: undefined,
+          });
+
+          transactionValue = entries.price;
+        }
+      })
+    );
 
     window.dataLayer.push({ event_params: null, ecommerce: null });
 
@@ -146,13 +310,13 @@ jQuery(document).ready(function ($) {
       },
       ecommerce: {
         currency: "EUR",
-        transaction_id: currentPriceListId,
+        transaction_id: transactionId,
         value: totalPurchaseValue,
         tax: undefined,
         shipping: undefined,
         coupon: undefined,
         affiliation: undefined,
-        items: itemData,
+        items: [...itemData, ...allExtraPayments, ...allExtraBeds],
       },
     });
   };
