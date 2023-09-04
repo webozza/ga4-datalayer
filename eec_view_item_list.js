@@ -69,6 +69,8 @@ jQuery(document).ready(function ($) {
 
   let banners = [];
   let bannersList = () => {
+    let hasRelatedTravels = $("#sorodna-potovanja").length == 1;
+
     $(".grid-overlay--link").each(function () {
       let thisBanner = $(this);
       let bannerId = thisBanner.data("travel-id");
@@ -81,6 +83,13 @@ jQuery(document).ready(function ($) {
       if ($("body").hasClass("single-potovanja")) {
         oskarDepartures2.map((entries) => {
           if (entries.travel_id == bannerId && !foundMatchingEntry) {
+            let itemsListName;
+            if (hasRelatedTravels) {
+              itemsListName = `${entries.travel_name}: Related trips`;
+            } else {
+              itemsListName = `${entries.travel_name}: Travel | ${bannerFilter}`;
+            }
+
             banners.push({
               item_id: entries.product_id,
               item_name: entries.travel_name,
@@ -98,7 +107,7 @@ jQuery(document).ready(function ($) {
               travel_guide_id: undefined,
               product_type: "Main",
               travel_age_group: undefined,
-              item_list_name: `${entries.travel_name}: Travel | ${bannerFilter}`,
+              item_list_name: itemsListName,
               index: bannerIndex + 1,
             });
             foundMatchingEntry = true;
