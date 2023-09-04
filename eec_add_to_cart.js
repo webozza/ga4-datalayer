@@ -416,7 +416,8 @@ jQuery(document).ready(function ($) {
             async function () {
               // let rawValue = $(this).parent().find("span").text();
               // let addOnPrice;
-              // addOnName = $(this).parent().text().replace(/\s+/g, " ").trim();
+              let addOnVal = JSON.parse($(this).val());
+              addOnName = addOnVal.extra_payment_name;
 
               // if (rawValue.indexOf("%") > -1) {
               //   cancellationPercentage = rawValue
