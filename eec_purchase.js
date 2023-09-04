@@ -70,8 +70,6 @@ jQuery(document).ready(function ($) {
         : oskarDepartures;
 
       const promises = [];
-      let allExtraPayments = [];
-      let allExtraBeds = [];
 
       // Processing for extra payments
       $(
@@ -236,9 +234,7 @@ jQuery(document).ready(function ($) {
       if (payOnline == "false") {
         paymentMethod = "Invoice";
         console.log("Purchase event triggered by @datio-it");
-        setTimeout(async () => {
-          await triggerPurchaseEvent();
-        }, 2200);
+        await triggerPurchaseEvent();
       }
     }
   });
