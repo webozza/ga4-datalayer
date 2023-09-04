@@ -236,7 +236,9 @@ jQuery(document).ready(function ($) {
       if (payOnline == "false") {
         paymentMethod = "Invoice";
         console.log("Purchase event triggered by @datio-it");
-        await triggerPurchaseEvent();
+        setTimeout(async () => {
+          await triggerPurchaseEvent();
+        }, 2200);
       }
     }
   });
