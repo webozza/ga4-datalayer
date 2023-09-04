@@ -1,4 +1,28 @@
 jQuery(document).ready(function ($) {
+  function generateTransactionID() {
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const date = new Date();
+    const year = date.getFullYear().toString().slice(-2);
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = String(date.getSeconds()).padStart(2, "0");
+    const randomChars = [];
+
+    // Generate a random part
+    for (let i = 0; i < 10; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      randomChars.push(characters[randomIndex]);
+    }
+
+    const transactionID = `${year}${month}${day}-${randomChars.join(
+      ""
+    )}-${hours}${minutes}${seconds}`;
+    return transactionID;
+  }
+
   var pageHasList = $(".table--departures").length;
 
   // prepare departure id
@@ -17,6 +41,7 @@ jQuery(document).ready(function ($) {
   let currentPriceListId;
   let travelId;
   let totalPurchaseValue;
+  let transactionId;
 
   // get current date
   let today = new Date();
@@ -188,6 +213,7 @@ jQuery(document).ready(function ($) {
       cartQuantity = newFormData["application_form[passengers_number]"];
       currentPriceListId =
         newFormData["application_form[price_list][current_price_list_id]"];
+      transactionId = generateTransactionID();
 
       let payOnline = newFormData["application_form[pay_online]"];
       let formApplicationType =
@@ -284,7 +310,7 @@ jQuery(document).ready(function ($) {
       },
       ecommerce: {
         currency: "EUR",
-        transaction_id: currentPriceListId,
+        transaction_id: transactionId,
         value: totalPurchaseValue,
         tax: undefined,
         shipping: undefined,
