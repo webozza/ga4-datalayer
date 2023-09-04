@@ -164,7 +164,7 @@ jQuery(document).ready(function ($) {
                     item_category: "Travel",
                     item_category2: entries.country_name,
                     price: 0,
-                    discount: entries.price - entries.actual_price,
+                    discount: 0,
                     affiliation: undefined,
                     travel_departure_date: entries.departure_start_date,
                     travel_style: entries.travel_style,
@@ -200,7 +200,7 @@ jQuery(document).ready(function ($) {
                     item_category: "Travel",
                     item_category2: entries.country_name,
                     price: extraPaymentPrice,
-                    discount: entries.price - entries.actual_price,
+                    discount: 0,
                     affiliation: undefined,
                     travel_departure_date: entries.departure_start_date,
                     travel_style: entries.travel_style,
@@ -227,7 +227,9 @@ jQuery(document).ready(function ($) {
           },
           ecommerce: {
             currency: "EUR",
-            value: cartPrice,
+            value: Number(
+              $("span.price.ng-binding").eq(0).text().replace("€", "")
+            ),
             coupon: undefined,
             payment_type: paymentMethodSelected,
             items: addPaymentInfo,
