@@ -65,6 +65,9 @@ jQuery(document).ready(function ($) {
     };
 
     $('[ng-click="saveApplicationForm()"]').mouseover(async function () {
+      allExtraPayments = [];
+      allExtraBeds = [];
+
       const selectedOskarDepartures = $("body").hasClass("single-potovanja")
         ? oskarDepartures2
         : oskarDepartures;

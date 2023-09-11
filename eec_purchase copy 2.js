@@ -65,18 +65,23 @@ jQuery(document).ready(function ($) {
     };
 
     $('[ng-click="saveApplicationForm()"]').mouseover(async function () {
+      const selectedOskarDepartures = $("body").hasClass("single-potovanja")
+        ? oskarDepartures2
+        : oskarDepartures;
+
       const promises = [];
 
       // Processing for extra payments
       $(
         '[ng-click="selectExtraPaymentForApplicationHolder(extra_payment)"], [ng-click="selectPassengerExtraPayment(extra_payment, key, true)"], [ng-click="selectPassengerExtraPayment(extra_payment, key, false)"]'
       ).each(function () {
-        let thisExtraPayment = $(this);
-        if (thisExtraPayment.is(":checked") == true) {
-          let surchargeValue = thisExtraPayment.val();
-          let extraData = JSON.parse(surchargeValue);
-          let extraPaymentName = extraData.extra_payment_name;
+        const thisExtraPayment = $(this);
+        if (thisExtraPayment.is(":checked")) {
+          const surchargeValue = thisExtraPayment.val();
+          const extraData = JSON.parse(surchargeValue);
+          const extraPaymentName = extraData.extra_payment_name;
           let extraPaymentPrice;
+
           if (extraData.extra_payment_price == "") {
             extraPaymentPrice = (
               Number(cartSinglePrice) *
@@ -86,41 +91,39 @@ jQuery(document).ready(function ($) {
             extraPaymentPrice = extraData.extra_payment_price;
           }
 
-          const selectedOskarDepartures = $("body").hasClass("single-potovanja")
-            ? oskarDepartures2
-            : oskarDepartures;
+          const promise = Promise.all(
+            selectedOskarDepartures.map(async (entries) => {
+              if (entries.ID == purchaseDepartureID) {
+                departureStartDate = entries.departure_start_date;
+                cartSinglePrice = entries.actual_price;
+                travelId = entries.travel_id;
 
-          const promise = selectedOskarDepartures.map(async (entries) => {
-            if (entries.ID == purchaseDepartureID) {
-              departureStartDate = entries.departure_start_date;
-              cartSinglePrice = entries.actual_price;
-              travelId = entries.travel_id;
+                await renderPotovanja(travelId);
 
-              await renderPotovanja(travelId);
-
-              allExtraPayments = [];
-              allExtraPayments.push({
-                item_id: undefined,
-                item_name: extraPaymentName,
-                item_brand: "Agencija Oskar",
-                item_category: "Travel",
-                item_category2: entries.country_name,
-                price: extraPaymentPrice,
-                discount: 0,
-                affiliation: undefined,
-                travel_departure_date: entries.departure_start_date,
-                travel_style: entries.travel_style,
-                travel_type: undefined,
-                travel_group_size: entries.velikost_skupine,
-                travel_duration: entries.travel_duration,
-                travel_guide_id: travelGuideId,
-                product_type: "Add-on",
-                travel_age_group: undefined,
-                quantity: 1,
-                coupon: undefined,
-              });
-            }
-          });
+                allExtraPayments.push({
+                  // Populate the data here
+                  item_id: undefined,
+                  item_name: extraPaymentName,
+                  item_brand: "Agencija Oskar",
+                  item_category: "Travel",
+                  item_category2: entries.country_name,
+                  price: extraPaymentPrice,
+                  discount: 0,
+                  affiliation: undefined,
+                  travel_departure_date: entries.departure_start_date,
+                  travel_style: entries.travel_style,
+                  travel_type: undefined,
+                  travel_group_size: entries.velikost_skupine,
+                  travel_duration: entries.travel_duration,
+                  travel_guide_id: travelGuideId,
+                  product_type: "Add-on",
+                  travel_age_group: undefined,
+                  quantity: 1,
+                  coupon: undefined,
+                });
+              }
+            })
+          );
 
           promises.push(promise);
         }
@@ -130,42 +133,40 @@ jQuery(document).ready(function ($) {
       $(
         '[ng-model="applicationFormHolder.is_on_extra_bed"],[ng-model="adult.is_on_extra_bed"],[ng-model="child.is_on_extra_bed"]'
       ).each(function () {
-        if ($(this).is(":checked") == true) {
-          const selectedOskarDepartures = $("body").hasClass("single-potovanja")
-            ? oskarDepartures2
-            : oskarDepartures;
+        if ($(this).is(":checked")) {
+          const promise = Promise.all(
+            selectedOskarDepartures.map(async (entries) => {
+              if (entries.ID == purchaseDepartureID) {
+                departureStartDate = entries.departure_start_date;
+                cartSinglePrice = entries.actual_price;
+                travelId = entries.travel_id;
 
-          const promise = selectedOskarDepartures.map(async (entries) => {
-            if (entries.ID == purchaseDepartureID) {
-              departureStartDate = entries.departure_start_date;
-              cartSinglePrice = entries.actual_price;
-              travelId = entries.travel_id;
+                await renderPotovanja(travelId);
 
-              await renderPotovanja(travelId);
-
-              allExtraPayments = [];
-              allExtraBeds.push({
-                item_id: undefined,
-                item_name: "Želim bivati v sobi z dodatnim ležiščem",
-                item_brand: "Agencija Oskar",
-                item_category: "Travel",
-                item_category2: entries.country_name,
-                price: 0,
-                discount: 0,
-                affiliation: undefined,
-                travel_departure_date: entries.departure_start_date,
-                travel_style: entries.travel_style,
-                travel_type: undefined,
-                travel_group_size: entries.velikost_skupine,
-                travel_duration: entries.travel_duration,
-                travel_guide_id: travelGuideId,
-                product_type: "Add-on",
-                travel_age_group: undefined,
-                quantity: 1,
-                coupon: undefined,
-              });
-            }
-          });
+                allExtraBeds.push({
+                  // Populate the data here for extra beds
+                  item_id: undefined,
+                  item_name: "Želim bivati v sobi z dodatnim ležiščem",
+                  item_brand: "Agencija Oskar",
+                  item_category: "Travel",
+                  item_category2: entries.country_name,
+                  price: 0,
+                  discount: 0,
+                  affiliation: undefined,
+                  travel_departure_date: entries.departure_start_date,
+                  travel_style: entries.travel_style,
+                  travel_type: undefined,
+                  travel_group_size: entries.velikost_skupine,
+                  travel_duration: entries.travel_duration,
+                  travel_guide_id: travelGuideId,
+                  product_type: "Add-on",
+                  travel_age_group: undefined,
+                  quantity: 1,
+                  coupon: undefined,
+                });
+              }
+            })
+          );
 
           promises.push(promise);
         }
@@ -297,6 +298,8 @@ jQuery(document).ready(function ($) {
     );
 
     window.dataLayer.push({ event_params: null, ecommerce: null });
+
+    console.log("yoyoyo", allExtraPayments, allExtraBeds);
 
     window.dataLayer.push({
       event: "RO_event_EEC",
