@@ -302,8 +302,6 @@ jQuery(document).ready(function ($) {
 
     window.dataLayer.push({ event_params: null, ecommerce: null });
 
-    console.log("yoyoyo", allExtraPayments, allExtraBeds);
-
     window.dataLayer.push({
       event: "RO_event_EEC",
       event_params: {

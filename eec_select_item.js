@@ -55,6 +55,8 @@ jQuery(document).ready(function ($) {
       });
     });
 
+    let hrt = $("#sorodna-potovanja").length == 1;
+
     // Banner
     $(".grid-overlay--link").click(async function (e) {
       let thisLink = $(this).attr("href");
@@ -70,24 +72,20 @@ jQuery(document).ready(function ($) {
         let hold2 = [];
         oskarDepartures2.map((entries, index) => {
           if (entries.travel_id == getID) {
+            let iln;
+            if (hrt) {
+              iln = `${entries.travel_name}: Related trips`;
+            } else {
+              iln = `${entries.travel_name}: Travel | ${bannerFilter}`;
+            }
+
             hold2.push({
-              // item_id: entries.product_id,
               item_name: entries.travel_name,
               item_brand: "Agencija Oskar",
               item_category: "Travel",
               item_category2: entries.country_name,
-              // price: entries.actual_price,
-              // discount: entries.price - entries.actual_price,
-              // affiliation: undefined,
-              // travel_departure_date: entries.departure_start_date,
-              // travel_style: entries.travel_style,
-              // travel_type: undefined,
-              // travel_group_size: entries.velikost_skupine,
-              // travel_duration: entries.travel_duration,
-              // travel_guide_id: undefined,
               product_type: "Main",
-              // travel_age_group: undefined,
-              item_list_name: `${entries.travel_name}: Travel | ${bannerFilter}`,
+              item_list_name: iln,
               index: bannerIndex + 1,
             });
           }
@@ -98,22 +96,11 @@ jQuery(document).ready(function ($) {
         oskarDepartures.map((entries, index) => {
           if (entries.travel_id == getID) {
             hold.push({
-              // item_id: entries.product_id,
               item_name: entries.travel_name,
               item_brand: "Agencija Oskar",
               item_category: "Travel",
               item_category2: entries.country_name,
-              // price: entries.actual_price,
-              // discount: entries.price - entries.actual_price,
-              // affiliation: undefined,
-              // travel_departure_date: entries.departure_start_date,
-              // travel_style: entries.travel_style,
-              // travel_type: undefined,
-              // travel_group_size: entries.velikost_skupine,
-              // travel_duration: entries.travel_duration,
-              // travel_guide_id: undefined,
               product_type: "Main",
-              // travel_age_group: undefined,
               item_list_name: `${entries.travel_name}: Travel | ${bannerFilter}`,
               index: bannerIndex + 1,
             });
