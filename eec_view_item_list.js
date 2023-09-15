@@ -81,13 +81,15 @@ jQuery(document).ready(function ($) {
       let foundMatchingEntry = false;
 
       if ($("body").hasClass("single-potovanja")) {
+        let currentTripName = $("h1#departure_name").text().trim();
+
         oskarDepartures2.map((entries) => {
           if (entries.travel_id == bannerId && !foundMatchingEntry) {
             let itemsListName;
             if (hasRelatedTravels) {
-              itemsListName = `${entries.travel_name}: Related trips`;
+              itemsListName = `${currentTripName}: Related trips`;
             } else {
-              itemsListName = `${entries.travel_name}: Travel | ${bannerFilter}`;
+              itemsListName = `${currentTripName}: Travel | ${bannerFilter}`;
             }
 
             banners.push({
