@@ -133,7 +133,7 @@ jQuery(document).ready(function ($) {
               travel_guide_id: undefined,
               product_type: "Main",
               travel_age_group: undefined,
-              item_list_name: `${entries.travel_name}: Travel | ${bannerFilter}`,
+              item_list_name: `${entries.country_name}: Travel | ${bannerFilter}`,
               index: bannerIndex + 1,
             });
             foundMatchingEntry = true;
