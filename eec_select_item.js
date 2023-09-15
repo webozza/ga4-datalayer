@@ -69,14 +69,16 @@ jQuery(document).ready(function ($) {
         .replace(/\n\s+/g, " ");
 
       if ($("body").hasClass("single-potovanja")) {
+        let currentTripName = $("h1#departure_name").text().trim();
+
         let hold2 = [];
         oskarDepartures2.map((entries, index) => {
           if (entries.travel_id == getID) {
             let iln;
             if (hrt) {
-              iln = `${entries.travel_name}: Related trips`;
+              iln = `${currentTripName}: Related trips`;
             } else {
-              iln = `${entries.travel_name}: Travel | ${bannerFilter}`;
+              iln = `${currentTripName}: Travel | ${bannerFilter}`;
             }
 
             hold2.push({
@@ -101,7 +103,7 @@ jQuery(document).ready(function ($) {
               item_category: "Travel",
               item_category2: entries.country_name,
               product_type: "Main",
-              item_list_name: `${entries.travel_name}: Travel | ${bannerFilter}`,
+              item_list_name: `${entries.country_name}: Travel | ${bannerFilter}`,
               index: bannerIndex + 1,
             });
           }
